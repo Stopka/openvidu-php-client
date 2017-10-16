@@ -87,7 +87,7 @@ class HttpClient {
         }
     }
 
-    public function post(string $url, ?array $data = null): string {
+    public function post(string $url, ?array $data = null): HttpResponse {
         $result = curl_setopt($this->resource, CURLOPT_URL, $this->getFullUrl($url));
         $this->throwExceptionIfError($result);
         $result = curl_setopt($this->resource, CURLOPT_RETURNTRANSFER, true);
@@ -99,8 +99,9 @@ class HttpClient {
             $this->throwExceptionIfError($result);
         }
         $output = curl_exec($this->resource);
+        $status = curl_getinfo($this->resource, CURLINFO_HTTP_CODE);
         $this->throwExceptionIfError($output);
-        return $output;
+        return new HttpResponse($status, $output);
     }
 
     public function __destruct() {
