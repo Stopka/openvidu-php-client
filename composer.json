@@ -14,7 +14,7 @@
   },
   "autoload": {
     "psr-0": {
-      "Stopka\\OpenviduPhpClient": "src/Stopka/OpenviduPhpClient"
+      "Stopka\\OpenviduPhpClient\\": "src/Stopka/OpenviduPhpClient"
     }
   }
 }
