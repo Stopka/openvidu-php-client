@@ -45,7 +45,8 @@ class OpenVidu {
      */
     private function buildHttpClient():HttpClient{
         $client = new HttpClient();
-        //TODO allow selfsigned SSL
+        $client->disableSSLHostVerification();
+        $client->disableSSLPeerVerification();
         $client->setAuth(CURLAUTH_ANY);
         $client->setUserPassword(self::HTTP_USERNAME,$this->secret);
         $client->setHostUrl($this->urlOpenViduServer);

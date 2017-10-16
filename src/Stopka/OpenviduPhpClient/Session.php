@@ -58,6 +58,7 @@ class Session {
         try {
             $response = $this->httpClient->post(self::SESSION_URL);
             $result = json_decode($response);
+
             return $result['id'];
         } catch (\Exception $e) {
             throw new OpenViduException("Unable to generate a sessionId", OpenViduException::CODE_SESSIONID_CANNOT_BE_CREATED, $e);

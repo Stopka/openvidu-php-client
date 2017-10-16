@@ -21,6 +21,24 @@ class HttpClient {
     }
 
     /**
+     * @param bool $value
+     * @throws HttpClientException
+     */
+    public function disableSSLPeerVerification(bool $value = true): void {
+        $result = curl_setopt($this->resource, CURLOPT_SSL_VERIFYPEER, !$value);
+        $this->throwExceptionIfError($result);
+    }
+
+    /**
+     * @param bool $value
+     * @throws HttpClientException
+     */
+    public function disableSSLHostVerification(bool $value = true): void {
+        $result = curl_setopt($this->resource, CURLOPT_SSL_VERIFYHOST, !$value);
+        $this->throwExceptionIfError($result);
+    }
+
+    /**
      * @param string $url
      * @return string
      */
@@ -28,8 +46,8 @@ class HttpClient {
         if (!$this->hostUrl) {
             return $url;
         }
-        if (substr($this->hostUrl, 0, 1) == "/") {
-            $url = substr($this->hostUrl, 1);
+        if (substr($url, 0, 1) == "/") {
+            $url = substr($url, 1);
         }
         return $this->hostUrl . $url;
     }
@@ -39,7 +57,7 @@ class HttpClient {
      */
     public function setHostUrl(string $hostUrl): void {
         $this->hostUrl = $hostUrl;
-        if (!substr($this->hostUrl, -1) !== "/") {
+        if (substr($this->hostUrl, -1) !== "/") {
             $this->hostUrl .= "/";
         }
     }
