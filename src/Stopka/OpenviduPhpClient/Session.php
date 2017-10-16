@@ -98,7 +98,7 @@ class Session {
                 "data" => $tokenOptions->getData()
             ]);
             $this->httpClient->setHeaders([
-                "content-type", "application/json"
+                "Content-Type: application/json"
             ]);
             $response = $this->httpClient->post(self::TOKEN_URL, $jsonData);
             $result = $this->parseResponse($response);
