@@ -98,7 +98,7 @@ class HttpClient {
      * @param resource $ch
      * @throws HttpClientException
      */
-    private function throwExceptionIfError(bool $result, resource $ch): void {
+    private function throwExceptionIfError(bool $result, $ch): void {
         if (!$result) {
             throw new HttpClientException(curl_error($ch), curl_errno($ch));
         }
@@ -108,7 +108,7 @@ class HttpClient {
      * @param resource $ch
      * @throws HttpClientException
      */
-    private function applyOptions(resource $ch): void {
+    private function applyOptions($ch): void {
         $result = curl_setopt_array($ch, $this->options);
         $this->throwExceptionIfError($result,$ch);
         $result = curl_setopt_array($ch, $this->oneTimeOptions);
