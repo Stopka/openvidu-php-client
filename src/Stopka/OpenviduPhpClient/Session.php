@@ -64,7 +64,7 @@ class Session {
             }
             throw new OpenViduException("Invalid response status code ".$response->getStatus(),$response->getStatus());
         }
-        $result = json_decode($response, true);
+        $result = json_decode($response->getContent(), true);
         return $result;
     }
 
