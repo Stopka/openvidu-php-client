@@ -116,14 +116,14 @@ class HttpClient {
         $this->oneTimeOptions = [];
     }
 
-    public function post(string $url, ?array $data = null): HttpResponse {
+    public function post(string $url, $data = null): HttpResponse {
         $ch = curl_init($this->getFullUrl($url));
+        $result = curl_setopt($ch, CURLOPT_POST, true);
+        $this->throwExceptionIfError($result,$ch);
         $this->applyOptions($ch);
         $result = curl_setopt($ch, CURLOPT_URL, $this->getFullUrl($url));
         $this->throwExceptionIfError($result,$ch);
         $result = curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $this->throwExceptionIfError($result,$ch);
-        $result = curl_setopt($ch, CURLOPT_POST, true);
         $this->throwExceptionIfError($result,$ch);
         if ($data) {
             $result = curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
