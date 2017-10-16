@@ -57,7 +57,7 @@ class Session {
     private function retrieveSessionId(): string {
         try {
             $response = $this->httpClient->post(self::SESSION_URL);
-            $result = json_decode($response);
+            $result = json_decode($response, true);
 
             return $result['id'];
         } catch (\Exception $e) {
@@ -84,7 +84,7 @@ class Session {
                 "content-type", "application/json"
             ]);
             $response = $this->httpClient->post(self::TOKEN_URL, $jsonData);
-            $result = json_decode($response);
+            $result = json_decode($response, true);
             return $result['id'];
         } catch (\Exception $e) {
             throw new OpenViduException("Could not retrieve token", OpenViduException::CODE_TOKEN_CANNOT_BE_CREATED, $e);
