@@ -1,0 +1,20 @@
+{
+  "name": "stopka/openvidu-php-client",
+  "type": "library",
+  "description": "Php client for openvidu server",
+  "homepage": "https://github.com/Stopka/openvidu-php-client",
+  "license": ["MIT"],
+  "authors": [
+    {
+      "name": "Štěpán Škorpil"
+    }
+  ],
+  "require": {
+
+  },
+  "autoload": {
+    "psr-0": {
+      "Stopka\\OpenviduPhpClient": "src/Stopka/OpenviduPhpClient"
+    }
+  }
+}
