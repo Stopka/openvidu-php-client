@@ -12,7 +12,7 @@ namespace Stopka\OpenviduPhpClient;
 use Stopka\OpenviduPhpClient\Http\HttpClient;
 
 class OpenVidu {
-    private const HTTP_USERNAME="OPENVIDUAPP";
+    private const HTTP_USERNAME = "OPENVIDUAPP";
 
     /** @var  string */
     private $urlOpenViduServer;
@@ -21,6 +21,9 @@ class OpenVidu {
     private $secret;
 
     private $httpClient;
+
+    /** @var bool */
+    private $sslCheck = true;
 
     /**
      * OpenVidu constructor.
@@ -34,21 +37,30 @@ class OpenVidu {
     }
 
     /**
+     * @param bool $value
+     */
+    public function enableSslCheck(bool $value = true): void {
+        $this->sslCheck = $value;
+    }
+
+    /**
      * @throws OpenViduException
      */
-    public function createSession():Session{
+    public function createSession(): Session {
         return new Session($this->httpClient);
     }
 
     /**
      * @return HttpClient
      */
-    private function buildHttpClient():HttpClient{
+    private function buildHttpClient(): HttpClient {
         $client = new HttpClient();
-        $client->disableSSLHostVerification();
-        $client->disableSSLPeerVerification();
+        if (!$this->sslCheck) {
+            $client->disableSSLHostVerification();
+            $client->disableSSLPeerVerification();
+        }
         $client->setAuth(CURLAUTH_ANY);
-        $client->setUserPassword(self::HTTP_USERNAME,$this->secret);
+        $client->setUserPassword(self::HTTP_USERNAME, $this->secret);
         $client->setHostUrl($this->urlOpenViduServer);
         return $client;
     }
