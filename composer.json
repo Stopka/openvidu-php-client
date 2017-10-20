@@ -10,11 +10,9 @@
     }
   ],
   "require": {
-
+    "php": ">=7.1"
   },
   "autoload": {
-    "psr-0": {
-      "Stopka\\OpenviduPhpClient": "src/Stopka/OpenviduPhpClient"
-    }
+    "classmap": ["src/"]
   }
 }
