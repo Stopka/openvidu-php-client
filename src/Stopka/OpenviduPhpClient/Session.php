@@ -8,28 +8,34 @@
 
 namespace Stopka\OpenviduPhpClient;
 
-
-use Stopka\OpenviduPhpClient\Http\HttpClient;
-use Stopka\OpenviduPhpClient\Http\HttpResponse;
+use Stopka\OpenviduPhpClient\Rest\JsonRestClient;
+use Stopka\OpenviduPhpClient\Rest\RestClientException;
 use Stopka\OpenviduPhpClient\TokenOptions\TokenOptionsBuilder;
 
 class Session {
     private const TOKEN_URL = "api/tokens";
     private const SESSION_URL = "api/sessions";
 
-    /** @var  HttpClient */
-    private $httpClient;
+    /** @var  JsonRestClient */
+    private $restClient;
 
     /** @var  string */
     private $sessionId;
 
+    /** @var SessionProperties */
+    private $properties;
+
     /**
      * Session constructor.
-     * @param HttpClient $httpClient
+     * @param JsonRestClient $restClient
      * @throws OpenViduException
      */
-    public function __construct(HttpClient $httpClient) {
-        $this->httpClient = $httpClient;
+    public function __construct(JsonRestClient $restClient, ?SessionProperties $properties = null) {
+        $this->restClient = $restClient;
+        if (!$properties) {
+            $properties = new SessionProperties();
+        }
+        $this->properties = $properties;
         $this->sessionId = $this->retrieveSessionId();
     }
 
@@ -52,34 +58,22 @@ class Session {
     }
 
     /**
-     * @param HttpResponse $response
-     * @return array
-     * @throws OpenViduException
-     */
-    private function parseResponse(HttpResponse $response): array {
-        if($response->getStatus()!==200){
-            $result = json_decode($response->getContent(), true);
-            if($result && isset($result['message'])){
-                throw new OpenViduException($result['message'],$response->getStatus());
-            }
-            throw new OpenViduException("Invalid response status code ".$response->getStatus(),$response->getStatus());
-        }
-        $result = json_decode($response->getContent(), true);
-        return $result;
-    }
-
-    /**
      * @return string
      * @throws OpenViduException
      */
     private function retrieveSessionId(): string {
         try {
-            $response = $this->httpClient->post(self::SESSION_URL);
-            $result = $this->parseResponse($response);
-            return $result['id'];
-        } catch (\Exception $e) {
+            $result = $this->restClient->post(self::SESSION_URL, [
+                "mediaMode" => $this->properties->getMediaMode(),
+                "recordingMode" => $this->properties->getRecordingMode(),
+                "defaultRecordingLayout" => $this->properties->getDefaultRecordingLayout(),
+                "defaultCustomLayout" => $this->properties->getDefaultCustomLayout(),
+                "customSessionId" => $this->properties->getCustomSessionId(),
+            ]);
+        } catch (RestClientException $e) {
             throw new OpenViduException("Unable to generate a sessionId", OpenViduException::CODE_SESSIONID_CANNOT_BE_CREATED, $e);
         }
+        return $result['id'];
     }
 
     /**
@@ -88,24 +82,19 @@ class Session {
      * @throws OpenViduException
      */
     public function generateToken(?TokenOptions $tokenOptions = null): string {
+        if (!$tokenOptions) {
+            $tokenOptions = $this->getDefaultTokenOptions();
+        }
         try {
-            if (!$tokenOptions) {
-                $tokenOptions = $this->getDefaultTokenOptions();
-            }
-            $jsonData = json_encode([
+            $result = $this->restClient->post(self::TOKEN_URL, [
                 "session" => $this->getSessionId(),
                 "role" => $tokenOptions->getRole(),
                 "data" => $tokenOptions->getData()
             ]);
-            $this->httpClient->setHeaders([
-                "Content-Type: application/json"
-            ]);
-            $response = $this->httpClient->post(self::TOKEN_URL, $jsonData);
-            $result = $this->parseResponse($response);
-            return $result['id'];
-        } catch (\Exception $e) {
+        } catch (RestClientException $e) {
             throw new OpenViduException("Could not retrieve token", OpenViduException::CODE_TOKEN_CANNOT_BE_CREATED, $e);
         }
+        return $result['id'];
     }
 
     /**
