@@ -29,9 +29,6 @@ class OpenVidu {
     /** @var JsonRestClient */
     private $restClient;
 
-    /** @var bool */
-    private $sslCheck = true;
-
     /**
      * OpenVidu constructor.
      * @param string $urlOpenViduServer
@@ -47,7 +44,9 @@ class OpenVidu {
      * @param bool $value
      */
     public function enableSslCheck(bool $value = true): void {
-        $this->sslCheck = $value;
+        $httpClient = $this->restClient->getHttpClient();
+        $httpClient->disableSSLHostVerification(!$value);
+        $httpClient->disableSSLPeerVerification(!$value);
     }
 
     /**
@@ -63,10 +62,6 @@ class OpenVidu {
      */
     private function buildRestClient(): JsonRestClient {
         $httpClient = new HttpClient();
-        if (!$this->sslCheck) {
-            $httpClient->disableSSLHostVerification();
-            $httpClient->disableSSLPeerVerification();
-        }
         $httpClient->setAuth(CURLAUTH_ANY);
         $httpClient->setUserPassword(self::HTTP_USERNAME, $this->secret);
         $restClient = new JsonRestClient($httpClient);
