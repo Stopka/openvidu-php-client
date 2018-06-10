@@ -53,8 +53,8 @@ class OpenVidu {
      * @return Session
      * @throws OpenViduException
      */
-    public function createSession(): Session {
-        return new Session($this->restClient);
+    public function createSession(?SessionProperties $properties = null): Session {
+        return new Session($this->restClient, $properties);
     }
 
     /**
@@ -75,8 +75,8 @@ class OpenVidu {
      * @return Recording
      * @throws OpenViduException
      */
-    public function startRecording(string $sessionId, ?RecordingProperties $properties = null): Recording{
-        if(!$properties){
+    public function startRecording(string $sessionId, ?RecordingProperties $properties = null): Recording {
+        if (!$properties) {
             $properties = (new RecordingPropertiesBuilder())->build();
         }
         try {
@@ -86,8 +86,8 @@ class OpenVidu {
                 "recordingLayout" => $properties->getRecordingLayout() ?? "",
                 "customLayout" => $properties->getCustomLayout() ?? ""
             ]);
-        }catch (RestClientException $e){
-            throw new OpenViduException("Could not start recording",OpenViduException::CODE_GENERIC, $e);
+        } catch (RestClientException $e) {
+            throw new OpenViduException("Could not start recording", OpenViduException::CODE_GENERIC, $e);
         }
         return new Recording($result);
     }
@@ -97,11 +97,11 @@ class OpenVidu {
      * @return Recording
      * @throws OpenViduException
      */
-    public function stopRecording(string $recordingId): Recording{
+    public function stopRecording(string $recordingId): Recording {
         try {
             $result = $this->restClient->post(self::RECORDINGS_STOP_URL . '/' . $recordingId);
-        }catch (RestClientException $e){
-            throw new OpenViduException("Could not stop recording",OpenViduException::CODE_GENERIC, $e);
+        } catch (RestClientException $e) {
+            throw new OpenViduException("Could not stop recording", OpenViduException::CODE_GENERIC, $e);
         }
         return new Recording($result);
     }
@@ -111,11 +111,11 @@ class OpenVidu {
      * @return Recording
      * @throws OpenViduException
      */
-    public function getRecording(string $recordingId): Recording{
+    public function getRecording(string $recordingId): Recording {
         try {
             $result = $this->restClient->get(self::RECORDINGS_URL . '/' . $recordingId);
-        }catch (RestClientException $e){
-            throw new OpenViduException("Could not retrieve recording",OpenViduException::CODE_GENERIC, $e);
+        } catch (RestClientException $e) {
+            throw new OpenViduException("Could not retrieve recording", OpenViduException::CODE_GENERIC, $e);
         }
         return new Recording($result);
     }
@@ -124,14 +124,14 @@ class OpenVidu {
      * @return Recording[]
      * @throws OpenViduException
      */
-    public function listRecordings(): array{
+    public function listRecordings(): array {
         try {
             $result = $this->restClient->get(self::RECORDINGS_URL);
-        }catch (RestClientException $e){
-            throw new OpenViduException("Could not retrieve recordings",OpenViduException::CODE_GENERIC, $e);
+        } catch (RestClientException $e) {
+            throw new OpenViduException("Could not retrieve recordings", OpenViduException::CODE_GENERIC, $e);
         }
         $recordings = [];
-        foreach ($result['items'] as $itemValues){
+        foreach ($result['items'] as $itemValues) {
             $recordings[] = new Recording($itemValues);
         }
         return $recordings;
@@ -141,11 +141,11 @@ class OpenVidu {
      * @param string $recordingId
      * @throws OpenViduException
      */
-    public function deleteRecording(string $recordingId): void{
+    public function deleteRecording(string $recordingId): void {
         try {
             $this->restClient->delete(self::RECORDINGS_URL . '/' . $recordingId);
-        }catch (RestClientException $e){
-            throw new OpenViduException("Could not delete recordings",OpenViduException::CODE_GENERIC, $e);
+        } catch (RestClientException $e) {
+            throw new OpenViduException("Could not delete recordings", OpenViduException::CODE_GENERIC, $e);
         }
     }
 }

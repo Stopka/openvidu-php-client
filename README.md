@@ -15,7 +15,8 @@ Usage should be similar to the original [java client API](https://openvidu.io/do
 
 ```php
 $openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
-$session = $openVidu->createSession();
+$sessionProperties = new SessionPropertiesBuilder();
+$session = $openVidu->createSession($sessionProperties->build());
 ```
 
 ### Generate token
