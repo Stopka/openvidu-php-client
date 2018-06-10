@@ -1,7 +1,7 @@
 # OpenVidu php client
 Php port of [openvidu-java-client](https://github.com/OpenVidu/openvidu/tree/master/openvidu-java-client), library simplifing openvidu server connection using it's exposed REST API.
 
-##Install
+## Install
 Installation via Composer.
 
 ```sh
