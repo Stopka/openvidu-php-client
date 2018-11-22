@@ -10,7 +10,9 @@
     }
   ],
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "ext-curl":"*",
+    "stopka/simple-rest": "dev-master@dev"
   },
   "autoload": {
     "classmap": ["src/"]

@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "9aa6a8e1f38dd8b0528409219d52acfd",
+    "packages": [
+        {
+            "name": "stopka/simple-rest",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Stopka/simple-rest.git",
+                "reference": "028023c82bd919ad62d6e28dd3df31aa55e033d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Stopka/simple-rest/zipball/028023c82bd919ad62d6e28dd3df31aa55e033d1",
+                "reference": "028023c82bd919ad62d6e28dd3df31aa55e033d1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Štěpán Škorpil"
+                }
+            ],
+            "description": "Simple Php HTTP REST client",
+            "homepage": "https://github.com/Stopka/simple-rest",
+            "time": "2018-11-22T06:28:24+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "stopka/simple-rest": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": {
+        "php": ">=7.1"
+    },
+    "platform-dev": []
+}

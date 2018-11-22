@@ -8,15 +8,15 @@
 
 namespace Stopka\OpenviduPhpClient;
 
-use Stopka\OpenviduPhpClient\Rest\JsonRestClient;
-use Stopka\OpenviduPhpClient\Rest\RestClientException;
 use Stopka\OpenviduPhpClient\TokenOptions\TokenOptionsBuilder;
+use Stopka\SimpleRest\Rest\RestClient;
+use Stopka\SimpleRest\Rest\RestClientException;
 
 class Session {
     private const TOKEN_URL = "api/tokens";
     private const SESSION_URL = "api/sessions";
 
-    /** @var  JsonRestClient */
+    /** @var  RestClient */
     private $restClient;
 
     /** @var  string */
@@ -27,10 +27,11 @@ class Session {
 
     /**
      * Session constructor.
-     * @param JsonRestClient $restClient
+     * @param RestClient $restClient
+     * @param null|SessionProperties $properties
      * @throws OpenViduException
      */
-    public function __construct(JsonRestClient $restClient, ?SessionProperties $properties = null) {
+    public function __construct(RestClient $restClient, ?SessionProperties $properties = null) {
         $this->restClient = $restClient;
         if (!$properties) {
             $properties = new SessionProperties();
