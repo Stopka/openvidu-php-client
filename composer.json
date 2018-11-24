@@ -11,8 +11,8 @@
   ],
   "require": {
     "php": ">=7.1",
-    "ext-curl":"*",
-    "stopka/simple-rest": "dev-master@dev"
+    "ext-json": "*",
+    "guzzlehttp/guzzle": "^6.3.3"
   },
   "autoload": {
     "classmap": ["src/"]

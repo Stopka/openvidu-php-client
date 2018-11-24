@@ -9,8 +9,6 @@
 namespace Stopka\OpenviduPhpClient;
 
 use Stopka\OpenviduPhpClient\TokenOptions\TokenOptionsBuilder;
-use Stopka\SimpleRest\Rest\RestClient;
-use Stopka\SimpleRest\Rest\RestClientException;
 
 class Session {
     private const TOKEN_URL = "api/tokens";

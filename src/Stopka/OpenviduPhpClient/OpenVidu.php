@@ -9,12 +9,6 @@
 namespace Stopka\OpenviduPhpClient;
 
 
-use Stopka\SimpleRest\Http\HttpClient;
-use Stopka\SimpleRest\RequestBuilders\JsonRequestDataBuilder;
-use Stopka\SimpleRest\ResponseParsers\JsonResponseDataParser;
-use Stopka\SimpleRest\Rest\RestClientException;
-use Stopka\SimpleRest\Rest\RestClient;
-
 class OpenVidu {
     private const HTTP_USERNAME = "OPENVIDUAPP";
 
@@ -61,18 +55,11 @@ class OpenVidu {
     }
 
     /**
-     * @return RestClient
+     * @return Client
      */
     private function buildRestClient(): RestClient {
-        $httpClient = new HttpClient();
-        $httpClient->setAuth(CURLAUTH_ANY);
-        $httpClient->setUserPassword(self::HTTP_USERNAME, $this->secret);
-        $requestDataBuilder = new JsonRequestDataBuilder();
-        $restClient = new RestClient($httpClient,$requestDataBuilder);
-        $responseDataParser = new JsonResponseDataParser();
-        $restClient->registerResponseDataParser($responseDataParser);
-        $restClient->setHostUrl($this->urlOpenViduServer);
-        return $restClient;
+        $client = new RestClient($this->urlOpenViduServer,self::HTTP_USERNAME, $this->secret);
+        return $client;
     }
 
     /**
