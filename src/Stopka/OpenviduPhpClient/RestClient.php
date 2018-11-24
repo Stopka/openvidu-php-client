@@ -77,6 +77,7 @@ class RestClient {
         if(!$result){
             return [];
         }
+        return $result;
     }
 
 }
