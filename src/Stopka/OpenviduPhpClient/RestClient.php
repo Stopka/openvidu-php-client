@@ -20,6 +20,12 @@ class RestClient {
     const HEADER_CONTENT_TYPE = "Content-Type";
     const MIME_JSON = "application/json";
 
+    /**
+     * RestClient constructor.
+     * @param string $baseUri
+     * @param string $username
+     * @param string $password
+     */
     public function __construct(string $baseUri, string $username, string $password) {
         $this->httpClient = new Client([
             'base_uri' => $baseUri,
@@ -30,17 +36,32 @@ class RestClient {
         ]);
     }
 
+    /**
+     * @param array $data
+     * @return array
+     */
     private function prepareOptions(array $data = []): array {
         return [
             'json' => $data
         ];
     }
 
+    /**
+     * @param string $url
+     * @param array $data
+     * @return array
+     * @throws RestClientException
+     */
     public function post(string $url, array $data = []): array {
         $response = $this->httpClient->post($url, $this->prepareOptions($data));
         return $this->processResponse($response);
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @return array
+     * @throws RestClientException
+     */
     private function processResponse(ResponseInterface $response): array {
         $contentType = $response->getHeader(self::HEADER_CONTENT_TYPE);
         $result = null;
