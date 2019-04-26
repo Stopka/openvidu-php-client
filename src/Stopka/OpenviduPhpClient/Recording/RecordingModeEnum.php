@@ -6,11 +6,14 @@
  * Time: 14:02
  */
 
-namespace Stopka\OpenviduPhpClient;
+namespace Stopka\OpenviduPhpClient\Recording;
 
 
-interface RecordingMode {
+use Stopka\OpenviduPhpClient\Enum;
 
+class RecordingModeEnum
+{
+    use Enum;
     /**
      * The session is recorded automatically as soon as the first client publishes a
      * stream to the session. It is automatically stopped after last user leaves the
@@ -26,4 +29,14 @@ interface RecordingMode {
      * {@link io.openvidu.java.client.OpenVidu#stopRecording(String)}.
      */
     const MANUAL = "MANUAL";
+
+    public function getValues(): array
+    {
+        return [
+            self::ALWAYS,
+            self::MANUAL
+        ];
+    }
+
+
 }

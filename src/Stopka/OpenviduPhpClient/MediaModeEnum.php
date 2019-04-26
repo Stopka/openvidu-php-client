@@ -9,7 +9,9 @@
 namespace Stopka\OpenviduPhpClient;
 
 
-interface MediaMode {
+class MediaModeEnum
+{
+    use Enum;
 
     /**
      * <i>(not available yet)</i> The session will attempt to transmit streams
@@ -22,4 +24,12 @@ interface MediaMode {
      */
     const ROUTED = "ROUTED";
 
+
+    public function getValues(): array
+    {
+        return [
+            self::RELAYED,
+            self::ROUTED
+        ];
+    }
 }

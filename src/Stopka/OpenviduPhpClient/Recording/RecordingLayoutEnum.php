@@ -6,10 +6,14 @@
  * Time: 14:02
  */
 
-namespace Stopka\OpenviduPhpClient;
+namespace Stopka\OpenviduPhpClient\Recording;
 
 
-interface RecordingLayout {
+use Stopka\OpenviduPhpClient\Enum;
+
+class RecordingLayoutEnum
+{
+    use Enum;
 
     /**
      * All the videos are evenly distributed, taking up as much space as possible
@@ -36,4 +40,15 @@ interface RecordingLayout {
      */
     const CUSTOM = "CUSTOM";
 
+
+    public function getValues(): array
+    {
+        return [
+            self::BEST_FIT,
+            self::PICTURE_IN_PICTURE,
+            self::VERTICAL_PRESENTATION,
+            self::HORIZONTAL_PRESENTATION,
+            self::CUSTOM
+        ];
+    }
 }

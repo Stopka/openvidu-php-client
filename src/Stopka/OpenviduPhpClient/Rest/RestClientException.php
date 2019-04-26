@@ -6,11 +6,9 @@
  * Time: 12:36
  */
 
-namespace Stopka\OpenviduPhpClient;
+namespace Stopka\OpenviduPhpClient\Rest;
 
-
-
-class OpenViduException extends \RuntimeException {
-
+class RestClientException extends \RuntimeException
+{
 
 }
