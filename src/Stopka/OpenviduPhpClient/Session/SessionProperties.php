@@ -76,9 +76,9 @@ class SessionProperties
     }
 
     /**
-     * @return RecordingOutputModeEnum
+     * @return RecordingLayoutEnum
      */
-    public function getDefaultRecordingLayout(): RecordingOutputModeEnum
+    public function getDefaultRecordingLayout(): RecordingLayoutEnum
     {
         return $this->defaultRecordingLayout;
     }
