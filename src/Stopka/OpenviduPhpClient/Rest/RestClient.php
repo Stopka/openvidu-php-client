@@ -10,6 +10,7 @@ namespace Stopka\OpenviduPhpClient\Rest;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 
 class RestClient
 {
@@ -56,8 +57,8 @@ class RestClient
     public function post(string $url, array $data = []): RestResponse
     {
         $options = $this->prepareOptions($data);
-        return $this->processResponse(function () use ($url, $options) {
-            $this->httpClient->post($url, $options);
+        return $this->processResponse(function () use ($url, $options): ResponseInterface {
+            return $this->httpClient->post($url, $options);
         });
     }
 
@@ -68,8 +69,8 @@ class RestClient
      */
     public function get(string $url): RestResponse
     {
-        return $this->processResponse(function () use ($url) {
-            $this->httpClient->get($url);
+        return $this->processResponse(function () use ($url): ResponseInterface {
+            return $this->httpClient->get($url);
         });
     }
 
@@ -80,8 +81,8 @@ class RestClient
      */
     public function delete(string $url): RestResponse
     {
-        return $this->processResponse(function () use ($url) {
-            $this->httpClient->delete($url);
+        return $this->processResponse(function () use ($url): ResponseInterface {
+            return $this->httpClient->delete($url);
         });
     }
 

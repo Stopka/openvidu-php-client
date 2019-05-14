@@ -112,10 +112,12 @@ class Session
         try {
             $data = [
                 "session" => $this->getSessionId(),
-                "role" => $tokenOptions->getRole(),
-                "data" => $tokenOptions->getData(),
-                "kurentoOptions" => $tokenOptions->getKurentoOptions()->getDataArray()
+                "role" => (string)$tokenOptions->getRole(),
+                "data" => $tokenOptions->getData()
             ];
+            if ($kurentoOptions = $tokenOptions->getKurentoOptions()) {
+                $data["kurentoOptions"] = $kurentoOptions->getDataArray();
+            }
             return $this->restClient->post(self::TOKEN_URL, $data)->getStringInArrayKey('id');
         } catch (RestClientException $e) {
             throw new OpenViduException("Could not retrieve token", 0, $e);
@@ -237,9 +239,9 @@ class Session
         }
         try {
             return $this->restClient->post(self::SESSION_URL, [
-                "mediaMode" => $this->properties->getMediaMode(),
-                "recordingMode" => $this->properties->getRecordingMode(),
-                "defaultRecordingLayout" => $this->properties->getDefaultRecordingLayout(),
+                "mediaMode" => (string)$this->properties->getMediaMode(),
+                "recordingMode" => (string)$this->properties->getRecordingMode(),
+                "defaultRecordingLayout" => (string)$this->properties->getDefaultRecordingLayout(),
                 "defaultCustomLayout" => $this->properties->getDefaultCustomLayout(),
                 "customSessionId" => $this->properties->getCustomSessionId(),
             ])->getStringInArrayKey('id');

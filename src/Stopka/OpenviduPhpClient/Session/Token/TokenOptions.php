@@ -27,9 +27,9 @@ class TokenOptions
      * TokenOptions constructor.
      * @param string $data
      * @param OpenViduRoleEnum $role
-     * @param KurentoOptions $kurentoOptions
+     * @param KurentoOptions|null $kurentoOptions
      */
-    public function __construct(string $data, OpenViduRoleEnum $role, KurentoOptions $kurentoOptions)
+    public function __construct(string $data, OpenViduRoleEnum $role, ?KurentoOptions $kurentoOptions = null)
     {
         $this->data = $data;
         $this->role = $role;
@@ -53,9 +53,9 @@ class TokenOptions
     }
 
     /**
-     * @return KurentoOptions
+     * @return KurentoOptions|null
      */
-    public function getKurentoOptions(): KurentoOptions
+    public function getKurentoOptions(): ?KurentoOptions
     {
         return $this->kurentoOptions;
     }
