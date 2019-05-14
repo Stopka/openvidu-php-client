@@ -25,8 +25,8 @@ class RestResponse
     private function checkContentType()
     {
         $contentType = $this->response->getHeader(self::HEADER_CONTENT_TYPE);
-        if (!$contentType || $contentType !== self::MIME_JSON) {
-            throw new RestResponseInvalidException("Invalid content type '$contentType'");
+        if (!in_array(self::MIME_JSON, $contentType)) {
+            throw new RestResponseInvalidException("Invalid content type ".implode(',',$contentType));
         }
     }
 
