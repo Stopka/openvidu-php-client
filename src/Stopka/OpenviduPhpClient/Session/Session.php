@@ -13,6 +13,7 @@ use Stopka\OpenviduPhpClient\MediaModeEnum;
 use Stopka\OpenviduPhpClient\OpenVidu;
 use Stopka\OpenviduPhpClient\OpenViduException;
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
+use Stopka\OpenviduPhpClient\Recording\RecordingLayoutEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingModeEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingOutputModeEnum;
 use Stopka\OpenviduPhpClient\Rest\RestClient;
@@ -263,7 +264,7 @@ class Session
     public function resetSessionWithDataArray(array $data): void
     {
         $this->sessionId = (string)$data['sessionId'];
-        if($data['createdAt']){
+        if ($data['createdAt']) {
             $this->createdAt = $this->createdAt->setTimestamp($data['createdAt']);
         }
         $this->recording = (bool)$data['recording'];
@@ -272,7 +273,7 @@ class Session
             ->setRecordingMode(new RecordingModeEnum($data['recordingMode']))
             ->setDefaultOutputMode(new RecordingOutputModeEnum($data['defaultOutputMode']));
         if (isset($data['defaultRecordingLayout'])) {
-            $builder->setDefaultRecordingLayout($data['defaultRecordingLayout']);
+            $builder->setDefaultRecordingLayout(new RecordingLayoutEnum($data['defaultRecordingLayout']));
         }
         if (isset($data['defaultCustomLayout'])) {
             $builder->setDefaultCustomLayout($data['defaultCustomLayout']);
@@ -282,7 +283,7 @@ class Session
         }
         $this->properties = $builder->build();
         $this->activeConnections = [];
-        foreach ($data['connections'] as $arrayConnection) {
+        foreach ($data['connections']['content'] as $arrayConnection) {
             $connection = Connection::createFromDataArray($arrayConnection);
             $this->activeConnections[$connection->getConnectionId()] = $connection;
         }
