@@ -74,6 +74,7 @@ class Session
         ?string $sessionId = null
     ) {
         $this->restClient = $restClient;
+        $this->createdAt = new \DateTime();
         if (!$properties) {
             $properties = (new SessionPropertiesBuilder())->build();
         }
@@ -262,7 +263,9 @@ class Session
     public function resetSessionWithDataArray(array $data): void
     {
         $this->sessionId = (string)$data['sessionId'];
-        $this->createdAt = (new \DateTime())->setTimestamp($data['createdAt']);
+        if($data['createdAt']){
+            $this->createdAt = $this->createdAt->setTimestamp($data['createdAt']);
+        }
         $this->recording = (bool)$data['recording'];
         $builder = new SessionPropertiesBuilder();
         $builder->setMediaMode(new MediaModeEnum($data['mediaMode']))
