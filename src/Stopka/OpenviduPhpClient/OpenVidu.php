@@ -66,6 +66,21 @@ class OpenVidu
     }
 
     /**
+     * @param SessionProperties|null $properties
+     * @return Session|null
+     */
+    public function createSessionFromDataArray(array $data): ?Session
+    {
+        try {
+            $session = Session::createFromArray($this->restClient, $data);
+            $this->activeSessions[$session->getSessionId()] = $session;
+            return $session;
+        }catch (EnumException $e){
+            return null;
+        }
+    }
+
+    /**
      * @return RestClient
      */
     private function buildRestClient(): RestClient
