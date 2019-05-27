@@ -8,6 +8,7 @@
 
 namespace Stopka\OpenviduPhpClient\Session;
 
+use DateTime;
 use Stopka\OpenviduPhpClient\EnumException;
 use Stopka\OpenviduPhpClient\MediaModeEnum;
 use Stopka\OpenviduPhpClient\OpenVidu;
@@ -32,7 +33,7 @@ class Session
     /** @var  string */
     private $sessionId;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $createdAt;
 
     /** @var SessionProperties */
@@ -75,7 +76,7 @@ class Session
         ?string $sessionId = null
     ) {
         $this->restClient = $restClient;
-        $this->createdAt = new \DateTime();
+        $this->createdAt = new DateTime();
         if (!$properties) {
             $properties = (new SessionPropertiesBuilder())->build();
         }
@@ -93,9 +94,9 @@ class Session
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }

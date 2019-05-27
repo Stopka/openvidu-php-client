@@ -8,6 +8,7 @@
 
 namespace Stopka\OpenviduPhpClient\Recording;
 
+use DateTime;
 use Stopka\OpenviduPhpClient\EnumException;
 
 class Recording
@@ -21,7 +22,7 @@ class Recording
     /** @var string */
     private $sessionId;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $createdAt;
 
     /** @var int bytes */
@@ -45,7 +46,7 @@ class Recording
     {
         $this->id = (string)$values['id'];
         $this->sessionId = (string)$values['sessionId'];
-        $this->createdAt = (new \DateTime())->setTimestamp($values['createdAt']);
+        $this->createdAt = (new DateTime())->setTimestamp($values['createdAt']);
         $this->size = (int)$values['size'];
         $this->duration = (float)$values['duration'];
         $this->url = (string)$values['url'];
@@ -125,9 +126,9 @@ class Recording
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }

@@ -4,6 +4,7 @@
 namespace Stopka\OpenviduPhpClient\Session;
 
 
+use DateTime;
 use Stopka\OpenviduPhpClient\EnumException;
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 
@@ -12,7 +13,7 @@ class Connection
     /** @var string */
     private $connectionId;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $createdAt;
 
     /** @var OpenViduRoleEnum */
@@ -42,7 +43,7 @@ class Connection
     /**
      * Connection constructor.
      * @param string $connectionId
-     * @param \DateTime $createdAt
+     * @param DateTime $createdAt
      * @param OpenViduRoleEnum $role
      * @param string $token
      * @param string $location
@@ -54,7 +55,7 @@ class Connection
      */
     public function __construct(
         string $connectionId,
-        \DateTime $createdAt,
+        DateTime $createdAt,
         OpenViduRoleEnum $role,
         string $token,
         string $location,
@@ -85,9 +86,9 @@ class Connection
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -179,7 +180,7 @@ class Connection
         }
         return new Connection(
             $data['connectionId'],
-            (new \DateTime())->setTimestamp($data['createdAt']),
+            (new DateTime())->setTimestamp($data['createdAt']),
             new OpenViduRoleEnum($data['role']),
             $data['token'],
             $data['location'],

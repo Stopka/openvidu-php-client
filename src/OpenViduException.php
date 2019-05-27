@@ -10,7 +10,9 @@ namespace Stopka\OpenviduPhpClient;
 
 
 
-class OpenViduException extends \RuntimeException {
+use RuntimeException;
+
+class OpenViduException extends RuntimeException {
 
 
 }

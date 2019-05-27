@@ -8,7 +8,9 @@
 
 namespace Stopka\OpenviduPhpClient\Rest;
 
-class RestClientException extends \RuntimeException
+use RuntimeException;
+
+class RestClientException extends RuntimeException
 {
 
 }

@@ -4,12 +4,14 @@
 namespace Stopka\OpenviduPhpClient\Session;
 
 
+use DateTime;
+
 class Publisher
 {
     /** @var string */
     private $streamId;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $createdAt;
 
     /** @var bool */
@@ -35,7 +37,7 @@ class Publisher
 
     public function __construct(
         string $streamId,
-        \DateTime $createdAt,
+        DateTime $createdAt,
         bool $hasAudio,
         bool $hasVideo,
         ?bool $audioActive,
@@ -64,9 +66,9 @@ class Publisher
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getCreatedAt(): \DateTime
+    public function getCreatedAt(): DateTime
     {
         return $this->createdAt;
     }
@@ -132,7 +134,7 @@ class Publisher
         $mediaOptions = $data['mediaOptions'];
         return new self(
             $data['streamId'],
-            (new \DateTime())->setTimestamp($data['createdAt']),
+            (new DateTime())->setTimestamp($data['createdAt']),
             $mediaOptions['hasAudio'],
             $mediaOptions['hasVideo'],
             $mediaOptions['audioActive'],
