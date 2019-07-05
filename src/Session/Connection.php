@@ -35,10 +35,10 @@ class Connection
     private $clientData;
 
     /** @var Publisher[] */
-    protected $publishers;
+    protected $publishers = [];
 
     /** @var string[] */
-    protected $subscribers;
+    protected $subscribers = [];
 
     /**
      * Connection constructor.
@@ -205,7 +205,7 @@ class Connection
             'clientData' => $this->clientData,
             'serverData' => $this->serverData,
             'publishers' => $publishers,
-            'subscribers' => clone $this->subscribers
+            'subscribers' => $this->subscribers
         ];
     }
 }
