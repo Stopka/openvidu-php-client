@@ -35,6 +35,9 @@ class OpenVidu
     /** @var string */
     protected $secret;
 
+    /** @var bool */
+    protected $sslCheck = true;
+
     /** @var RestClient */
     protected $restClient;
 
@@ -45,10 +48,12 @@ class OpenVidu
      * OpenVidu constructor.
      * @param string $urlOpenViduServer
      * @param string $secret
+     * @param bool   $sslCheck
      */
-    public function __construct(string $urlOpenViduServer, string $secret)
+    public function __construct(string $urlOpenViduServer, string $secret, bool $sslCheck = true)
     {
         $this->secret = $secret;
+        $this->sslCheck = $sslCheck;
         $this->urlOpenViduServer = $urlOpenViduServer;
         $this->restClient = $this->buildRestClient();
     }
@@ -85,7 +90,7 @@ class OpenVidu
      */
     private function buildRestClient(): RestClient
     {
-        $client = new RestClient($this->urlOpenViduServer, self::HTTP_USERNAME, $this->secret);
+        $client = new RestClient($this->urlOpenViduServer, self::HTTP_USERNAME, $this->secret, $this->sslCheck);
         return $client;
     }
 
