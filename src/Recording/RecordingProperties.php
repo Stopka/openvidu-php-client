@@ -35,16 +35,16 @@ class RecordingProperties
 
     public function __construct(
         string $name,
-        RecordingOutputModeEnum $outputMode,
-        RecordingLayoutEnum $recordingLayout,
-        string $customLayout,
-        string $resolution,
+        RecordingOutputModeEnum $outputMode = null,
+        RecordingLayoutEnum $recordingLayout = null,
+        string $customLayout = null,
+        string $resolution = null,
         bool $hasAudio = true,
         bool $hasVideo = true
     ) {
         $this->name = $name;
-        $this->outputMode = $outputMode;
-        $this->recordingLayout = $recordingLayout;
+        $this->outputMode = $outputMode ?? new RecordingOutputModeEnum(RecordingOutputModeEnum::COMPOSED);
+        $this->recordingLayout = $recordingLayout ?? new RecordingLayoutEnum(RecordingLayoutEnum::BEST_FIT);
         $this->customLayout = $customLayout;
         $this->resolution = $resolution;
         $this->hasAudio = $hasAudio;
