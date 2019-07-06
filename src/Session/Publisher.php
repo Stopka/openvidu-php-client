@@ -148,14 +148,17 @@ class Publisher
     public function getDataArray(): array
     {
         return [
-            'streamId' => $this->getStreamId(),
-            'hasAudio' => $this->isHasAudio(),
-            'hasVideo' => $this->isHasVideo(),
-            'audioActive' => $this->isAudioActive(),
-            'videoActive' => $this->isVideoActive(),
-            'frameRate' => $this->getFrameRate(),
-            'typeOfVideo' => $this->getTypeOfVideo(),
-            'videoDimensions' => $this->getVideoDimensions()
+            'streamId'     => $this->getStreamId(),
+            'createdAt'    => $this->getCreatedAt()->getTimestamp(),
+            'mediaOptions' => [
+                'hasAudio'        => $this->isHasAudio(),
+                'hasVideo'        => $this->isHasVideo(),
+                'audioActive'     => $this->isAudioActive(),
+                'videoActive'     => $this->isVideoActive(),
+                'frameRate'       => $this->getFrameRate(),
+                'typeOfVideo'     => $this->getTypeOfVideo(),
+                'videoDimensions' => $this->getVideoDimensions(),
+            ],
         ];
     }
 
