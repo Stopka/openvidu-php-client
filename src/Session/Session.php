@@ -207,7 +207,7 @@ class Session
      */
     public function getActiveConnections(): array
     {
-        return clone $this->activeConnections;
+        return $this->activeConnections;
     }
 
     public function isBeingRecorded(): bool

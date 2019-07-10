@@ -25,15 +25,15 @@ class RestClient
      * @param string $baseUri
      * @param string $username
      * @param string $password
+     * @param bool   $verify
      */
-    public function __construct(string $baseUri, string $username, string $password)
+    public function __construct(string $baseUri, string $username, string $password, bool $verify = true)
     {
         $this->httpClient = new Client([
             'base_uri' => $baseUri,
-            'auth' => [$username, $password],
-            'headers' => [
-                self::HEADER_ACCEPT => self::MIME_JSON
-            ]
+            'auth'     => [$username, $password],
+            'headers'  => [self::HEADER_ACCEPT => self::MIME_JSON],
+            'verify'   => $verify,
         ]);
     }
 

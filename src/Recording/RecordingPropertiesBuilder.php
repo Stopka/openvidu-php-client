@@ -38,12 +38,12 @@ class RecordingPropertiesBuilder
     {
         return new RecordingProperties(
             $this->name,
-            $this->outputMode,
-            $this->recordingLayout,
-            $this->customLayout,
-            $this->resolution,
-            $this->hasAudio,
-            $this->hasVideo
+            $this->outputMode ?? null,
+            $this->recordingLayout ?? null,
+            $this->customLayout ?? null,
+            $this->resolution ?? null,
+            $this->hasAudio ?? true,
+            $this->hasVideo ?? true
         );
     }
 

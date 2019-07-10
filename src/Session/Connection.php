@@ -35,10 +35,10 @@ class Connection
     private $clientData;
 
     /** @var Publisher[] */
-    protected $publishers;
+    protected $publishers = [];
 
     /** @var string[] */
-    protected $subscribers;
+    protected $subscribers = [];
 
     /**
      * Connection constructor.
@@ -146,7 +146,7 @@ class Connection
      */
     public function getPublishers(): array
     {
-        return clone $this->publishers;
+        return $this->publishers;
     }
 
     /**
@@ -154,7 +154,7 @@ class Connection
      */
     public function getSubscribers(): array
     {
-        return clone $this->subscribers;
+        return $this->subscribers;
     }
 
     public function setSubscribers(array $subscribers)
@@ -176,7 +176,7 @@ class Connection
         }
         $subscribers = [];
         foreach ($data['subscribers'] as $arraySubscriber) {
-            $subscribers = $arraySubscriber['streamId'];
+            $subscribers[] = $arraySubscriber['streamId'];
         }
         return new Connection(
             $data['connectionId'],
@@ -198,14 +198,18 @@ class Connection
         foreach ($this->publishers as $publisher) {
             $publishers[] = $publisher->getDataArray();
         }
+
         return [
             'connectionId' => $this->connectionId,
-            'role' => (string)$this->role,
-            'token' => $this->token,
-            'clientData' => $this->clientData,
-            'serverData' => $this->serverData,
-            'publishers' => $publishers,
-            'subscribers' => clone $this->subscribers
+            'createdAt'    => $this->createdAt->getTimestamp(),
+            'role'         => (string)$this->role,
+            'token'        => $this->token,
+            'location'     => $this->location,
+            'platform'     => $this->platform,
+            'serverData'   => $this->serverData,
+            'clientData'   => $this->clientData,
+            'publishers'   => $publishers,
+            'subscribers'  => $this->subscribers,
         ];
     }
 }
