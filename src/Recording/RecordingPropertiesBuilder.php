@@ -1,38 +1,32 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 12:51
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
-
-
 
 class RecordingPropertiesBuilder
 {
 
     /** @var string */
-    private $name;
+    private string $name;
 
     /** @var RecordingOutputModeEnum */
-    private $outputMode;
+    private RecordingOutputModeEnum $outputMode;
 
     /** @var RecordingLayoutEnum */
-    private $recordingLayout;
+    private RecordingLayoutEnum $recordingLayout;
 
     /** @var string */
-    private $customLayout;
+    private string $customLayout;
 
     /** @var string */
-    private $resolution;
+    private string $resolution;
 
     /** @var bool */
-    private $hasAudio;
+    private bool $hasAudio;
 
     /** @var bool */
-    private $hasVideo;
+    private bool $hasVideo;
 
     public function build(): RecordingProperties
     {
@@ -54,6 +48,7 @@ class RecordingPropertiesBuilder
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -64,6 +59,7 @@ class RecordingPropertiesBuilder
     public function setOutputMode(RecordingOutputModeEnum $outputMode): self
     {
         $this->outputMode = $outputMode;
+
         return $this;
     }
 
@@ -74,6 +70,7 @@ class RecordingPropertiesBuilder
     public function setRecordingLayout(RecordingLayoutEnum $recordingLayout): self
     {
         $this->recordingLayout = $recordingLayout;
+
         return $this;
     }
 
@@ -84,6 +81,7 @@ class RecordingPropertiesBuilder
     public function setCustomLayout(string $customLayout): self
     {
         $this->customLayout = $customLayout;
+
         return $this;
     }
 
@@ -94,6 +92,7 @@ class RecordingPropertiesBuilder
     public function setResolution(string $resolution): self
     {
         $this->resolution = $resolution;
+
         return $this;
     }
 
@@ -104,6 +103,7 @@ class RecordingPropertiesBuilder
     public function setHasAudio(bool $hasAudio): self
     {
         $this->hasAudio = $hasAudio;
+
         return $this;
     }
 
@@ -114,6 +114,7 @@ class RecordingPropertiesBuilder
     public function setHasVideo(bool $hasVideo): self
     {
         $this->hasVideo = $hasVideo;
+
         return $this;
     }
 }

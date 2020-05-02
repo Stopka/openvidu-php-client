@@ -1,26 +1,34 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session\Token;
-
 
 class KurentoOptions
 {
     /** @var int|null */
-    private $videoMaxRecvBandwidth;
+    private ?int $videoMaxRecvBandwidth;
 
     /** @var int|null */
-    private $videoMinRecvBandwidth;
+    private ?int $videoMinRecvBandwidth;
 
     /** @var int|null */
-    private $videoMaxSendBandwidth;
+    private ?int $videoMaxSendBandwidth;
 
     /** @var int|null */
-    private $videoMinSendBandwidth;
+    private ?int $videoMinSendBandwidth;
 
     /** @var string[] */
-    private $allowedFilters;
+    private array $allowedFilters;
 
+    /**
+     * KurentoOptions constructor.
+     * @param int|null $videoMaxRecvBandwidth
+     * @param int|null $videoMinRecvBandwidth
+     * @param int|null $videoMaxSendBandwidth
+     * @param int|null $videoMinSendBandwidth
+     * @param string[] $allowedFilters
+     */
     public function __construct(
         ?int $videoMaxRecvBandwidth,
         ?int $videoMinRecvBandwidth,
@@ -37,7 +45,7 @@ class KurentoOptions
 
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getVideoMaxRecvBandwidth(): ?int
     {
@@ -45,7 +53,7 @@ class KurentoOptions
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getVideoMinRecvBandwidth(): ?int
     {
@@ -53,7 +61,7 @@ class KurentoOptions
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getVideoMaxSendBandwidth(): ?int
     {
@@ -61,7 +69,7 @@ class KurentoOptions
     }
 
     /**
-     * @return int
+     * @return int|null
      */
     public function getVideoMinSendBandwidth(): ?int
     {
@@ -73,25 +81,29 @@ class KurentoOptions
      */
     public function getAllowedFilters(): array
     {
-        return clone $this->allowedFilters;
+        return $this->allowedFilters;
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getDataArray(): array
     {
         $result = [];
-        if ($this->videoMaxRecvBandwidth) {
+        if (null !== $this->videoMaxRecvBandwidth) {
             $result['videoMaxRecvBandwidth'] = $this->videoMaxRecvBandwidth;
         }
-        if ($this->videoMinRecvBandwidth) {
+        if (null !== $this->videoMinRecvBandwidth) {
             $result['videoMinRecvBandwidth'] = $this->videoMinRecvBandwidth;
         }
-        if ($this->videoMaxSendBandwidth) {
+        if (null !== $this->videoMaxSendBandwidth) {
             $result['videoMaxSendBandwidth'] = $this->videoMaxSendBandwidth;
         }
-        if ($this->videoMinSendBandwidth) {
+        if (null !== $this->videoMinSendBandwidth) {
             $result['videoMinSendBandwidth'] = $this->videoMinSendBandwidth;
         }
-        $result['allowedFilters'] = clone $this->allowedFilters;
+        $result['allowedFilters'] = $this->allowedFilters;
+
         return $result;
     }
 }

@@ -1,17 +1,14 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 12:51
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
 
 use DateTime;
-use Stopka\OpenviduPhpClient\EnumException;
+use Stopka\OpenviduPhpClient\ApiPaths;
+use Stopka\OpenviduPhpClient\Enum\EnumException;
+use Stopka\OpenviduPhpClient\InvalidDataException;
 use Stopka\OpenviduPhpClient\MediaModeEnum;
-use Stopka\OpenviduPhpClient\OpenVidu;
 use Stopka\OpenviduPhpClient\OpenViduException;
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingLayoutEnum;
@@ -24,26 +21,24 @@ use Stopka\OpenviduPhpClient\Session\Token\TokenOptionsBuilder;
 
 class Session
 {
-    private const TOKEN_URL = "api/tokens";
-    private const SESSION_URL = "api/sessions";
 
     /** @var  RestClient */
-    private $restClient;
+    private RestClient $restClient;
 
     /** @var  string */
-    private $sessionId;
+    private string $sessionId;
 
     /** @var DateTime */
-    private $createdAt;
+    private DateTime $createdAt;
 
     /** @var SessionProperties */
-    private $properties;
+    private SessionProperties $properties;
 
     /** @var Connection[] */
-    private $activeConnections = [];
+    private array $activeConnections = [];
 
     /** @var bool */
-    private $recording = false;
+    private bool $recording = false;
 
     public static function createFromProperties(RestClient $restClient, ?SessionProperties $properties = null): self
     {
@@ -52,14 +47,15 @@ class Session
 
     /**
      * @param RestClient $restClient
-     * @param array $data
+     * @param mixed[] $data
      * @return Session
-     * @throws EnumException
+     * @throws InvalidDataException
      */
     public static function createFromArray(RestClient $restClient, array $data): self
     {
         $session = new self($restClient, null, $data['sessionId']);
         $session->resetSessionWithDataArray($data);
+
         return $session;
     }
 
@@ -77,16 +73,12 @@ class Session
     ) {
         $this->restClient = $restClient;
         $this->createdAt = new DateTime();
-        if (!$properties) {
-            $properties = (new SessionPropertiesBuilder())->build();
-        }
-        $this->properties = $properties;
+        $this->properties = $properties ?? (new SessionPropertiesBuilder())->build();
         $this->sessionId = $this->retrieveSessionId($sessionId);
     }
 
     /**
      * @return string
-     * @throws OpenViduException
      */
     public function getSessionId(): string
     {
@@ -105,25 +97,25 @@ class Session
      * @param null|TokenOptions $tokenOptions
      * @return string
      * @throws OpenViduException
-     * @throws EnumException
+     * @throws InvalidDataException
      */
     public function generateToken(?TokenOptions $tokenOptions = null): string
     {
-        if (!$tokenOptions) {
-            $tokenOptions = $this->getDefaultTokenOptions();
-        }
+        $tokenOptions = $tokenOptions ?? $this->getDefaultTokenOptions();
         try {
             $data = [
-                "session" => $this->getSessionId(),
-                "role" => (string)$tokenOptions->getRole(),
-                "data" => $tokenOptions->getData()
+                'session' => $this->getSessionId(),
+                'role' => (string)$tokenOptions->getRole(),
+                'data' => $tokenOptions->getData(),
             ];
-            if ($kurentoOptions = $tokenOptions->getKurentoOptions()) {
-                $data["kurentoOptions"] = $kurentoOptions->getDataArray();
+            $kurentoOptions = $tokenOptions->getKurentoOptions();
+            if (null !== $kurentoOptions) {
+                $data['kurentoOptions'] = $kurentoOptions->getDataArray();
             }
-            return $this->restClient->post(self::TOKEN_URL, $data)->getStringInArrayKey('id');
+
+            return $this->restClient->post(ApiPaths::TOKENS, $data)->getStringInArrayKey('id');
         } catch (RestClientException $e) {
-            throw new OpenViduException("Could not retrieve token", 0, $e);
+            throw new OpenViduException('Could not retrieve token', 0, $e);
         }
     }
 
@@ -135,6 +127,7 @@ class Session
     {
         $builder = new TokenOptionsBuilder();
         $builder->setRole(new OpenViduRoleEnum(OpenViduRoleEnum::PUBLISHER));
+
         return $builder->build();
     }
 
@@ -144,43 +137,45 @@ class Session
     public function close(): void
     {
         try {
-            $this->restClient->delete(OpenVidu::SESSIONS_URL . '/' . $this->sessionId);
+            $this->restClient->delete(ApiPaths::SESSIONS . '/' . $this->sessionId);
         } catch (RestClientException $e) {
-            throw new OpenViduException("Unable to close session", 0, $e);
+            throw new OpenViduException('Unable to close session', 0, $e);
         }
     }
 
     /**
-     * @throws EnumException
+     * @throws InvalidDataException
      */
     public function fetch(): bool
     {
         try {
             $beforeArray = $this->toDataArray();
-            $data = $this->restClient->get(OpenVidu::SESSIONS_URL . '/' . $this->sessionId)
+            $data = $this->restClient->get(ApiPaths::SESSIONS . '/' . $this->sessionId)
                 ->getArray();
             $this->resetSessionWithDataArray($data);
             $hasChanged = json_encode($this->toDataArray()) !== json_encode($beforeArray);
+
             return $hasChanged;
         } catch (RestClientException $e) {
-            throw new OpenViduException("Unable to fetch session", 0, $e);
+            throw new OpenViduException('Unable to fetch session', 0, $e);
         }
     }
 
     public function forceDisconnect(string $connectionId): void
     {
         try {
-            $this->restClient->delete(OpenVidu::SESSIONS_URL . '/' . $this->sessionId . '/connection/' . $connectionId);
+            $this->restClient->delete(ApiPaths::SESSIONS . '/' . $this->sessionId . '/connection/' . $connectionId);
             $connectionClosed = $this->activeConnections[$connectionId] ?? null;
             unset($this->activeConnections[$connectionId]);
-            if ($connectionClosed) {
+            if (null !== $connectionClosed) {
                 foreach ($connectionClosed->getPublishers() as $publisher) {
                     $streamId = $publisher->getStreamId();
                     foreach ($this->activeConnections as $connection) {
                         $subscribers = $connection->getSubscribers();
-                        $subscribers = array_filter($subscribers, function ($subscriber) use ($streamId) {
-                            return $streamId !== $subscriber;
-                        });
+                        $subscribers = array_filter(
+                            $subscribers,
+                            static fn($subscriber) => $streamId !== $subscriber
+                        );
                         $connection->setSubscribers($subscribers);
                     }
                 }
@@ -189,16 +184,16 @@ class Session
             // Remove every Publisher of the closed connection from every subscriber list of
             // other connections
         } catch (RestClientException $e) {
-            throw new OpenViduException("Disconnecting failed", 0, $e);
+            throw new OpenViduException('Disconnecting failed', 0, $e);
         }
     }
 
-    public function forceUnpublish(string $streamId)
+    public function forceUnpublish(string $streamId): void
     {
         try {
-            $this->restClient->delete(OpenVidu::SESSIONS_URL . '/' . $this->sessionId . '/stream/' . $streamId);
+            $this->restClient->delete(ApiPaths::SESSIONS . '/' . $this->sessionId . '/stream/' . $streamId);
         } catch (RestClientException $e) {
-            throw new OpenViduException("Unpublishing failed", 0, $e);
+            throw new OpenViduException('Unpublishing failed', 0, $e);
         }
     }
 
@@ -227,7 +222,7 @@ class Session
 
     public function hasSessionId(): bool
     {
-        return $this->sessionId && strlen($this->sessionId);
+        return '' !== $this->sessionId;
     }
 
     /**
@@ -237,19 +232,22 @@ class Session
      */
     private function retrieveSessionId(?string $sesstionId = null): string
     {
-        if ($sesstionId) {
+        if (null !== $sesstionId && '' !== $sesstionId) {
             return $sesstionId;
         }
         try {
-            return $this->restClient->post(self::SESSION_URL, [
-                "mediaMode" => (string)$this->properties->getMediaMode(),
-                "recordingMode" => (string)$this->properties->getRecordingMode(),
-                "defaultRecordingLayout" => (string)$this->properties->getDefaultRecordingLayout(),
-                "defaultCustomLayout" => $this->properties->getDefaultCustomLayout(),
-                "customSessionId" => $this->properties->getCustomSessionId(),
-            ])->getStringInArrayKey('id');
+            return $this->restClient->post(
+                ApiPaths::SESSIONS,
+                [
+                    'mediaMode' => (string)$this->properties->getMediaMode(),
+                    'recordingMode' => (string)$this->properties->getRecordingMode(),
+                    'defaultRecordingLayout' => (string)$this->properties->getDefaultRecordingLayout(),
+                    'defaultCustomLayout' => $this->properties->getDefaultCustomLayout(),
+                    'customSessionId' => $this->properties->getCustomSessionId(),
+                ]
+            )->getStringInArrayKey('id');
         } catch (RestClientException $e) {
-            throw new OpenViduException("Unable to generate a sessionId", 0, $e);
+            throw new OpenViduException('Unable to generate a sessionId', 0, $e);
         }
     }
 
@@ -259,14 +257,14 @@ class Session
     }
 
     /**
-     * @param array $data
-     * @throws EnumException
+     * @param mixed[] $data
+     * @throws InvalidDataException
      */
     public function resetSessionWithDataArray(array $data): void
     {
         $this->sessionId = (string)$data['sessionId'];
-        if ($data['createdAt']) {
-            $this->createdAt = $this->createdAt->setTimestamp($data['createdAt']);
+        if (array_key_exists('createdAt', $data)) {
+            $this->createdAt = $this->createdAt->setTimestamp((int)$data['createdAt']);
         }
         $this->recording = (bool)$data['recording'];
         $builder = new SessionPropertiesBuilder();
@@ -279,7 +277,7 @@ class Session
         if (isset($data['defaultCustomLayout'])) {
             $builder->setDefaultCustomLayout($data['defaultCustomLayout']);
         }
-        if ($this->properties && $this->properties->getCustomSessionId()) {
+        if ('' !== $this->properties->getCustomSessionId()) {
             $builder->setCustomSessionId($this->properties->getCustomSessionId());
         }
         $this->properties = $builder->build();
@@ -290,12 +288,16 @@ class Session
         }
     }
 
+    /**
+     * @return mixed[]
+     */
     public function toDataArray(): array
     {
         $connections = [];
         foreach ($this->activeConnections as $connection) {
             $connections[] = $connection->getDataArray();
         }
+
         return [
             'sessionId' => $this->sessionId,
             'createdAt' => $this->createdAt->getTimestamp(),
@@ -308,10 +310,8 @@ class Session
             'defaultCustomLayout' => $this->properties->getDefaultCustomLayout(),
             'connections' => [
                 'numberOfElements' => count($connections),
-                'content' => $connections
-            ]
+                'content' => $connections,
+            ],
         ];
     }
-
-
 }

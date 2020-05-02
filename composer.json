@@ -1,22 +1,33 @@
 {
-  "name": "stopka/openvidu-php-client",
-  "type": "library",
-  "description": "Php client for openvidu server",
-  "homepage": "https://github.com/Stopka/openvidu-php-client",
-  "license": ["MIT"],
-  "authors": [
-    {
-      "name": "Štěpán Škorpil"
+    "name": "stopka/openvidu-php-client",
+    "type": "library",
+    "description": "Php client for openvidu server",
+    "homepage": "https://github.com/Stopka/openvidu-php-client",
+    "license": [
+        "MIT"
+    ],
+    "authors": [
+        {
+            "name": "Štěpán Škorpil"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "ext-json": "*",
+        "guzzlehttp/guzzle": "^6.5.3"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "~0.12",
+        "phpstan/phpstan-strict-rules": "~0.12",
+        "slevomat/coding-standard": "^6.0",
+        "squizlabs/php_codesniffer": "^3.5",
+        "ergebnis/phpstan-rules": "^0.14.3",
+        "phpstan/phpstan-deprecation-rules": "^0.12.2",
+        "nette/tester": "^2.3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Stopka\\OpenviduPhpClient\\": "src/"
+        }
     }
-  ],
-  "require": {
-    "php": ">=7.1",
-    "ext-json": "*",
-    "guzzlehttp/guzzle": "^6.3.3"
-  },
-  "autoload": {
-    "psr-4": {
-      "Stopka\\OpenviduPhpClient\\": "src/"
-    }
-  }
 }

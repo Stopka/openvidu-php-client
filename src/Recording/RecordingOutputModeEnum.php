@@ -1,25 +1,26 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
 
-
-use Stopka\OpenviduPhpClient\Enum;
+use Stopka\OpenviduPhpClient\Enum\EnumTrait;
 
 class RecordingOutputModeEnum
 {
-    use Enum;
+    use EnumTrait;
 
-    const COMPOSED = "COMPOSED";
-    const INDIVIDUAL = "INDIVIDUAL";
+    public const COMPOSED = 'COMPOSED';
+    public const INDIVIDUAL = 'INDIVIDUAL';
 
+    /**
+     * @return string[]
+     */
     public function getValues(): array
     {
         return [
             self::COMPOSED,
-            self::INDIVIDUAL
+            self::INDIVIDUAL,
         ];
     }
-
-
 }

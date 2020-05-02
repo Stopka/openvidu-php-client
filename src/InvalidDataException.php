@@ -6,7 +6,7 @@ namespace Stopka\OpenviduPhpClient;
 
 use RuntimeException;
 
-class OpenViduException extends RuntimeException
+class InvalidDataException extends RuntimeException
 {
 
 }

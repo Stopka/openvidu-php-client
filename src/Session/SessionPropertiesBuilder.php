@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 12:51
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
-
 
 use Stopka\OpenviduPhpClient\MediaModeEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingLayoutEnum;
@@ -17,22 +12,22 @@ use Stopka\OpenviduPhpClient\Recording\RecordingOutputModeEnum;
 class SessionPropertiesBuilder
 {
     /** @var MediaModeEnum */
-    private $mediaMode;
+    private MediaModeEnum $mediaMode;
 
     /** @var RecordingModeEnum */
-    private $recordingMode;
+    private RecordingModeEnum $recordingMode;
 
     /** @var RecordingOutputModeEnum */
-    private $defaultOutputMode;
+    private RecordingOutputModeEnum $defaultOutputMode;
 
     /** @var RecordingLayoutEnum */
-    private $defaultRecordingLayout;
+    private RecordingLayoutEnum $defaultRecordingLayout;
 
     /** @var string */
-    private $defaultCustomLayout = "";
+    private string $defaultCustomLayout = '';
 
     /** @var string */
-    private $customSessionId = "";
+    private string $customSessionId = '';
 
     public function __construct()
     {
@@ -73,6 +68,7 @@ class SessionPropertiesBuilder
     public function setMediaMode(MediaModeEnum $mediaMode): self
     {
         $this->mediaMode = $mediaMode;
+
         return $this;
     }
 
@@ -88,6 +84,7 @@ class SessionPropertiesBuilder
     public function setRecordingMode(RecordingModeEnum $recordingMode): self
     {
         $this->recordingMode = $recordingMode;
+
         return $this;
     }
 
@@ -104,6 +101,7 @@ class SessionPropertiesBuilder
     public function setDefaultOutputMode(RecordingOutputModeEnum $defaultOutputMode): self
     {
         $this->defaultOutputMode = $defaultOutputMode;
+
         return $this;
     }
 
@@ -122,6 +120,7 @@ class SessionPropertiesBuilder
     public function setDefaultRecordingLayout(RecordingLayoutEnum $layout): self
     {
         $this->defaultRecordingLayout = $layout;
+
         return $this;
     }
 
@@ -138,6 +137,7 @@ class SessionPropertiesBuilder
     public function setDefaultCustomLayout(string $path): self
     {
         $this->defaultCustomLayout = $path;
+
         return $this;
     }
 
@@ -153,6 +153,7 @@ class SessionPropertiesBuilder
     public function setCustomSessionId(string $customSessionId): self
     {
         $this->customSessionId = $customSessionId;
+
         return $this;
     }
 }

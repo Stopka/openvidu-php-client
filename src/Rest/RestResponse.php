@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Rest;
 
-
+use JsonException;
 use Psr\Http\Message\ResponseInterface;
 
 class RestResponse
 {
-    const HEADER_CONTENT_TYPE = "Content-Type";
-    const MIME_JSON = "application/json";
+    protected const HEADER_CONTENT_TYPE = 'Content-Type';
+    protected const MIME_JSON = 'application/json';
 
     /** @var ResponseInterface */
-    private $response;
+    private ResponseInterface $response;
 
     public function __construct(ResponseInterface $response)
     {
@@ -20,40 +21,31 @@ class RestResponse
     }
 
     /**
-     * @throws RestResponseInvalidException
-     */
-    private function checkContentType()
-    {
-        $contentType = $this->response->getHeader(self::HEADER_CONTENT_TYPE);
-        if (!in_array(self::MIME_JSON, $contentType)) {
-            throw new RestResponseInvalidException("Invalid content type ".implode(',',$contentType));
-        }
-    }
-
-    /**
-     * @return array
+     * @return mixed[]
      * @throws RestResponseInvalidException
      */
     public function getArray(): array
     {
-        $this->checkContentType();
-        $array = json_decode($this->response->getBody(), true);
-        if (!is_array($array)) {
-            throw new RestResponseInvalidException('Could not parse json');
+        $data = $this->parseData();
+        if (!is_array($data)) {
+            throw new RestResponseInvalidException('Expected array data');
         }
-        return $array;
+
+        return $data;
     }
 
     /**
      * @param string $key
      * @return mixed
+     * @throws RestResponseInvalidException
      */
     public function getDataInArrayKey(string $key)
     {
         $result = $this->getArray();
-        if (!isset($result[$key])) {
+        if (!array_key_exists($key, $result)) {
             throw new RestResponseInvalidException("Missing key '$key' in response data");
         }
+
         return $result[$key];
     }
 
@@ -68,12 +60,13 @@ class RestResponse
         if (!is_string($result)) {
             throw new RestResponseInvalidException("Key '$key' does not contain string");
         }
+
         return $result;
     }
 
     /**
      * @param string $key
-     * @return array
+     * @return mixed[]
      * @throws RestResponseInvalidException
      */
     public function getArrayInArrayKey(string $key): array
@@ -82,6 +75,33 @@ class RestResponse
         if (!is_array($result)) {
             throw new RestResponseInvalidException("Key '$key' does not contain array");
         }
+
         return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function parseData()
+    {
+        $this->checkContentType();
+        try {
+            $this->response->getBody()->rewind();
+
+            return json_decode($this->response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new RestResponseInvalidException('Could not parse json', 0, $e);
+        }
+    }
+
+    /**
+     * @throws RestResponseInvalidException
+     */
+    private function checkContentType(): void
+    {
+        $contentType = $this->response->getHeader(self::HEADER_CONTENT_TYPE);
+        if (!in_array(self::MIME_JSON, $contentType, true)) {
+            throw new RestResponseInvalidException('Invalid content type ' . implode(',', $contentType));
+        }
     }
 }

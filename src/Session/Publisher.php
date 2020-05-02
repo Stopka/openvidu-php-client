@@ -1,50 +1,50 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
-
 
 use DateTime;
 
 class Publisher
 {
     /** @var string */
-    private $streamId;
+    private string $streamId;
 
     /** @var DateTime */
-    private $createdAt;
+    private DateTime $createdAt;
 
     /** @var bool */
-    private $hasVideo;
+    private bool $hasVideo;
 
     /** @var bool */
-    private $hasAudio;
+    private bool $hasAudio;
 
     /** @var bool */
-    private $audioActive;
+    private bool $audioActive;
 
     /** @var bool */
-    private $videoActive;
+    private bool $videoActive;
 
     /** @var int */
-    private $frameRate;
+    private int $frameRate;
 
     /** @var string */
-    private $typeOfVideo;
+    private string $typeOfVideo;
 
     /** @var string */
-    private $videoDimensions;
+    private string $videoDimensions;
 
     public function __construct(
         string $streamId,
         DateTime $createdAt,
         bool $hasAudio,
         bool $hasVideo,
-        ?bool $audioActive,
-        ?bool $videoActive,
-        ?int $frameRate,
-        ?string $typeOfVideo,
-        ?string $videoDimensions
+        bool $audioActive,
+        bool $videoActive,
+        int $frameRate,
+        string $typeOfVideo,
+        string $videoDimensions
     ) {
         $this->streamId = $streamId;
         $this->createdAt = $createdAt;
@@ -129,9 +129,34 @@ class Publisher
         return $this->videoDimensions;
     }
 
-    public static function createFromDataArray(array $data)
+    /**
+     * @return mixed[]
+     */
+    public function getDataArray(): array
+    {
+        return [
+            'streamId' => $this->getStreamId(),
+            'createdAt' => $this->getCreatedAt()->getTimestamp(),
+            'mediaOptions' => [
+                'hasAudio' => $this->isHasAudio(),
+                'hasVideo' => $this->isHasVideo(),
+                'audioActive' => $this->isAudioActive(),
+                'videoActive' => $this->isVideoActive(),
+                'frameRate' => $this->getFrameRate(),
+                'typeOfVideo' => $this->getTypeOfVideo(),
+                'videoDimensions' => $this->getVideoDimensions(),
+            ],
+        ];
+    }
+
+    /**
+     * @param mixed[] $data
+     * @return Publisher
+     */
+    public static function createFromDataArray(array $data): Publisher
     {
         $mediaOptions = $data['mediaOptions'];
+
         return new self(
             $data['streamId'],
             (new DateTime())->setTimestamp($data['createdAt']),
@@ -144,23 +169,4 @@ class Publisher
             $mediaOptions['videoDimensions']
         );
     }
-
-    public function getDataArray(): array
-    {
-        return [
-            'streamId'     => $this->getStreamId(),
-            'createdAt'    => $this->getCreatedAt()->getTimestamp(),
-            'mediaOptions' => [
-                'hasAudio'        => $this->isHasAudio(),
-                'hasVideo'        => $this->isHasVideo(),
-                'audioActive'     => $this->isAudioActive(),
-                'videoActive'     => $this->isVideoActive(),
-                'frameRate'       => $this->getFrameRate(),
-                'typeOfVideo'     => $this->getTypeOfVideo(),
-                'videoDimensions' => $this->getVideoDimensions(),
-            ],
-        ];
-    }
-
-
 }

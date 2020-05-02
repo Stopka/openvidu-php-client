@@ -1,3 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
-openvidu-php-client.iml
+*.iml
+composer.lock
+vendor

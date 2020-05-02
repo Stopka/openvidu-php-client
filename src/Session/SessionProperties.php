@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 12:51
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
-
 
 use Stopka\OpenviduPhpClient\MediaModeEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingLayoutEnum;
@@ -17,22 +12,22 @@ use Stopka\OpenviduPhpClient\Recording\RecordingOutputModeEnum;
 class SessionProperties
 {
     /** @var MediaModeEnum */
-    private $mediaMode;
+    private MediaModeEnum $mediaMode;
 
     /** @var RecordingModeEnum */
-    private $recordingMode;
+    private RecordingModeEnum $recordingMode;
 
     /** @var RecordingOutputModeEnum */
-    private $defaultOutputMode;
+    private RecordingOutputModeEnum $defaultOutputMode;
 
-    /** @var RecordingOutputModeEnum */
-    private $defaultRecordingLayout;
-
-    /** @var string */
-    private $defaultCustomLayout;
+    /** @var RecordingLayoutEnum */
+    private RecordingLayoutEnum $defaultRecordingLayout;
 
     /** @var string */
-    private $customSessionId;
+    private string $defaultCustomLayout;
+
+    /** @var string */
+    private string $customSessionId;
 
 
     public function __construct(
@@ -40,8 +35,8 @@ class SessionProperties
         ?RecordingModeEnum $recordingMode = null,
         ?RecordingOutputModeEnum $defaultOutputMode = null,
         ?RecordingLayoutEnum $layout = null,
-        string $defaultCustomLayout = "",
-        string $customSessionId = ""
+        string $defaultCustomLayout = '',
+        string $customSessionId = ''
     ) {
         $this->mediaMode = $mediaMode ?? new MediaModeEnum(MediaModeEnum::ROUTED);
         $this->recordingMode = $recordingMode ?? new RecordingModeEnum(RecordingModeEnum::MANUAL);

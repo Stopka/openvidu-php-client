@@ -1,73 +1,78 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session\Token;
-
 
 class KurentoOptionsBuilder
 {
     /** @var int|null */
-    private $videoMaxRecvBandwidth;
+    private ?int $videoMaxRecvBandwidth;
 
     /** @var int|null */
-    private $videoMinRecvBandwidth;
+    private ?int $videoMinRecvBandwidth;
 
     /** @var int|null */
-    private $videoMaxSendBandwidth;
+    private ?int $videoMaxSendBandwidth;
 
     /** @var int|null */
-    private $videoMinSendBandwidth;
+    private ?int $videoMinSendBandwidth;
 
     /** @var string[] */
-    private $allowedFilters = [];
+    private array $allowedFilters = [];
 
     /**
-     * @param int $videoMaxRecvBandwidth
-     * @return static
+     * @param int|null $videoMaxRecvBandwidth
+     * @return self
      */
     public function setVideoMaxRecvBandwidth(?int $videoMaxRecvBandwidth): self
     {
         $this->videoMaxRecvBandwidth = $videoMaxRecvBandwidth;
+
         return $this;
     }
 
     /**
-     * @param int $videoMinRecvBandwidth
-     * @return static
+     * @param int|null $videoMinRecvBandwidth
+     * @return self
      */
     public function setVideoMinRecvBandwidth(?int $videoMinRecvBandwidth): self
     {
         $this->videoMinRecvBandwidth = $videoMinRecvBandwidth;
+
         return $this;
     }
 
     /**
-     * @param int $videoMaxSendBandwidth
-     * @return static
+     * @param int|null $videoMaxSendBandwidth
+     * @return self
      */
     public function setVideoMaxSendBandwidth(?int $videoMaxSendBandwidth): self
     {
         $this->videoMaxSendBandwidth = $videoMaxSendBandwidth;
+
         return $this;
     }
 
     /**
-     * @param int $videoMinSendBandwidth
-     * @return static
+     * @param int|null $videoMinSendBandwidth
+     * @return self
      */
     public function setVideoMinSendBandwidth(?int $videoMinSendBandwidth): self
     {
         $this->videoMinSendBandwidth = $videoMinSendBandwidth;
+
         return $this;
     }
 
     /**
      * @param string[] $allowedFilters
-     * @return static
+     * @return self
      */
     public function setAllowedFilters(array $allowedFilters): self
     {
         $this->allowedFilters = $allowedFilters;
+
         return $this;
     }
 

@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 14:01
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session\Token;
-
 
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 
@@ -15,13 +10,13 @@ class TokenOptionsBuilder
 {
 
     /** @var  string */
-    private $data = "";
+    private string $data = '';
 
     /** @var  OpenViduRoleEnum */
-    private $role;
+    private OpenViduRoleEnum $role;
 
     /** @var KurentoOptions */
-    private $kurentoOptions;
+    private KurentoOptions $kurentoOptions;
 
 
     public function __construct()
@@ -36,6 +31,7 @@ class TokenOptionsBuilder
     public function setData(string $data): self
     {
         $this->data = $data;
+
         return $this;
     }
 
@@ -46,6 +42,7 @@ class TokenOptionsBuilder
     public function setRole(OpenViduRoleEnum $role): self
     {
         $this->role = $role;
+
         return $this;
     }
 
@@ -56,6 +53,7 @@ class TokenOptionsBuilder
     public function setKurentoOptions(KurentoOptions $kurentoOptions): self
     {
         $this->kurentoOptions = $kurentoOptions;
+
         return $this;
     }
 
@@ -66,5 +64,4 @@ class TokenOptionsBuilder
     {
         return new TokenOptions($this->data, $this->role, $this->kurentoOptions);
     }
-
 }

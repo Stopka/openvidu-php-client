@@ -1,13 +1,8 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 14:01
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session\Token;
-
 
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 
@@ -15,13 +10,13 @@ class TokenOptions
 {
 
     /** @var  string */
-    private $data;
+    private string $data;
 
     /** @var  OpenViduRoleEnum */
-    private $role;
+    private OpenViduRoleEnum $role;
 
     /** @var KurentoOptions */
-    private $kurentoOptions;
+    private ?KurentoOptions $kurentoOptions;
 
     /**
      * TokenOptions constructor.

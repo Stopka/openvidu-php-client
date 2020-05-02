@@ -1,44 +1,39 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 12:51
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
-
 
 class RecordingProperties
 {
 
     /** @var string */
-    private $name;
+    private string $name;
 
     /** @var RecordingOutputModeEnum */
-    private $outputMode;
+    private RecordingOutputModeEnum $outputMode;
 
     /** @var RecordingLayoutEnum */
-    private $recordingLayout;
+    private RecordingLayoutEnum $recordingLayout;
 
     /** @var string */
-    private $customLayout;
+    private ?string $customLayout;
 
     /** @var string */
-    private $resolution;
+    private ?string $resolution;
 
     /** @var bool */
-    private $hasAudio;
+    private bool $hasAudio;
 
     /** @var bool */
-    private $hasVideo;
+    private bool $hasVideo;
 
     public function __construct(
         string $name,
         RecordingOutputModeEnum $outputMode = null,
         RecordingLayoutEnum $recordingLayout = null,
-        string $customLayout = null,
-        string $resolution = null,
+        ?string $customLayout = null,
+        ?string $resolution = null,
         bool $hasAudio = true,
         bool $hasVideo = true
     ) {
@@ -76,17 +71,17 @@ class RecordingProperties
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCustomLayout(): string
+    public function getCustomLayout(): ?string
     {
         return $this->customLayout;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getResolution(): string
+    public function getResolution(): ?string
     {
         return $this->resolution;
     }

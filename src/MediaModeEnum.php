@@ -1,35 +1,34 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 14:02
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient;
 
+use Stopka\OpenviduPhpClient\Enum\EnumTrait;
 
-class MediaModeEnum
+final class MediaModeEnum
 {
-    use Enum;
+    use EnumTrait;
 
     /**
      * <i>(not available yet)</i> The session will attempt to transmit streams
      * directly between clients
      */
-    const RELAYED = "RELAYED";
+    public const RELAYED = 'RELAYED';
 
     /**
      * The session will transmit streams using OpenVidu Media Server
      */
-    const ROUTED = "ROUTED";
+    public const ROUTED = 'ROUTED';
 
-
+    /**
+     * @return string[]
+     */
     public function getValues(): array
     {
         return [
             self::RELAYED,
-            self::ROUTED
+            self::ROUTED,
         ];
     }
 }

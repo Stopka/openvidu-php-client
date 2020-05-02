@@ -1,21 +1,24 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
 
-
-use Stopka\OpenviduPhpClient\Enum;
+use Stopka\OpenviduPhpClient\Enum\EnumTrait;
 
 class RecordingStatusEnum
 {
-    use Enum;
+    use EnumTrait;
 
-    const STARTING = "starting";
-    const STARTED = "started";
-    const STOPPED = "stopped";
-    const READY = "ready";
-    const FAILED = "failed";
+    public const STARTING = 'starting';
+    public const STARTED = 'started';
+    public const STOPPED = 'stopped';
+    public const READY = 'ready';
+    public const FAILED = 'failed';
 
+    /**
+     * @return string[]
+     */
     public function getValues(): array
     {
         return [
@@ -23,9 +26,7 @@ class RecordingStatusEnum
             self::STARTED,
             self::STOPPED,
             self::READY,
-            self::FAILED
+            self::FAILED,
         ];
     }
-
-
 }

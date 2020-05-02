@@ -1,30 +1,28 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 14:02
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient;
 
+use Stopka\OpenviduPhpClient\Enum\EnumTrait;
 
-class OpenViduRoleEnum
+final class OpenViduRoleEnum
 {
-    use Enum;
+    use EnumTrait;
 
-    const SUBSCRIBER = 'SUBSCRIBER';
-    const PUBLISHER = 'PUBLISHER';
-    const MODERATOR = 'MODERATOR';
+    public const SUBSCRIBER = 'SUBSCRIBER';
+    public const PUBLISHER = 'PUBLISHER';
+    public const MODERATOR = 'MODERATOR';
 
+    /**
+     * @return string[]
+     */
     public function getValues(): array
     {
         return [
             self::SUBSCRIBER,
             self::PUBLISHER,
-            self::MODERATOR
+            self::MODERATOR,
         ];
     }
-
-
 }

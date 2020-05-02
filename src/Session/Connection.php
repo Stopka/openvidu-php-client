@@ -1,44 +1,45 @@
 <?php
 
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
 
-
 use DateTime;
-use Stopka\OpenviduPhpClient\EnumException;
+use Stopka\OpenviduPhpClient\InvalidDataException;
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 
 class Connection
 {
+
     /** @var string */
-    private $connectionId;
+    private string $connectionId;
 
     /** @var DateTime */
-    private $createdAt;
+    private DateTime $createdAt;
 
     /** @var OpenViduRoleEnum */
-    private $role;
+    private OpenViduRoleEnum $role;
 
     /** @var string */
-    private $token;
+    private string $token;
 
     /** @var string */
-    private $location;
+    private string $location;
 
     /** @var string */
-    private $platform;
+    private string $platform;
 
     /** @var string */
-    private $serverData;
+    private string $serverData;
 
     /** @var string */
-    private $clientData;
+    private string $clientData;
 
     /** @var Publisher[] */
-    protected $publishers = [];
+    protected array $publishers = [];
 
     /** @var string[] */
-    protected $subscribers = [];
+    protected array $subscribers = [];
 
     /**
      * Connection constructor.
@@ -157,15 +158,18 @@ class Connection
         return $this->subscribers;
     }
 
-    public function setSubscribers(array $subscribers)
+    /**
+     * @param string[] $subscribers
+     */
+    public function setSubscribers(array $subscribers): void
     {
         $this->subscribers = $subscribers;
     }
 
     /**
-     * @param array $data
+     * @param mixed[] $data
      * @return Connection
-     * @throws EnumException
+     * @throws InvalidDataException
      */
     public static function createFromDataArray(array $data): Connection
     {
@@ -178,6 +182,7 @@ class Connection
         foreach ($data['subscribers'] as $arraySubscriber) {
             $subscribers[] = $arraySubscriber['streamId'];
         }
+
         return new Connection(
             $data['connectionId'],
             (new DateTime())->setTimestamp($data['createdAt']),
@@ -192,24 +197,25 @@ class Connection
         );
     }
 
+    /**
+     * @return mixed[]
+     */
     public function getDataArray(): array
     {
-        $publishers = [];
-        foreach ($this->publishers as $publisher) {
-            $publishers[] = $publisher->getDataArray();
-        }
-
         return [
             'connectionId' => $this->connectionId,
-            'createdAt'    => $this->createdAt->getTimestamp(),
-            'role'         => (string)$this->role,
-            'token'        => $this->token,
-            'location'     => $this->location,
-            'platform'     => $this->platform,
-            'serverData'   => $this->serverData,
-            'clientData'   => $this->clientData,
-            'publishers'   => $publishers,
-            'subscribers'  => $this->subscribers,
+            'createdAt' => $this->createdAt->getTimestamp(),
+            'role' => (string)$this->role,
+            'token' => $this->token,
+            'location' => $this->location,
+            'platform' => $this->platform,
+            'serverData' => $this->serverData,
+            'clientData' => $this->clientData,
+            'publishers' => array_map(
+                static fn(Publisher $publisher) => $publisher->getDataArray(),
+                $this->publishers
+            ),
+            'subscribers' => $this->subscribers,
         ];
     }
 }

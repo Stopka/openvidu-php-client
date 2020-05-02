@@ -5,7 +5,7 @@ Php port of [openvidu-java-client](https://github.com/OpenVidu/openvidu/tree/mas
 Installation via Composer.
 
 ```sh
-composer require stopka/openvidu-php-client "dev-master@dev" 
+composer require stopka/openvidu-php-client
 ```
 
 ## Usage examples
@@ -14,7 +14,7 @@ Usage should be similar to the original [java client API](https://openvidu.io/do
 ### Create session
 
 ```php
-$openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+$openvidu = (new OpenViduFactory(OPENVIDU_URL, OPENVIDU_SECRET))->create();
 $sessionProperties = new SessionPropertiesBuilder();
 $session = $openVidu->createSession($sessionProperties->build());
 ```

@@ -1,70 +1,65 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 12:19
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
 
 use DateTime;
-use Stopka\OpenviduPhpClient\EnumException;
+use Stopka\OpenviduPhpClient\InvalidDataException;
 
 class Recording
 {
     /** @var RecordingStatusEnum */
-    private $status;
+    private RecordingStatusEnum $status;
 
     /** @var string */
-    private $id;
+    private string $id;
 
     /** @var string */
-    private $sessionId;
+    private string $sessionId;
 
     /** @var DateTime */
-    private $createdAt;
+    private DateTime $createdAt;
 
     /** @var int bytes */
-    private $size;
+    private int $size;
 
-    /** @var double seconds */
-    private $duration;
+    /** @var float seconds */
+    private float $duration;
 
     /** @var string */
-    private $url;
+    private string $url;
 
     /** @var RecordingProperties */
-    private $recordingProperties;
+    private RecordingProperties $recordingProperties;
 
     /**
      * Recording constructor.
-     * @param array $values
-     * @throws EnumException
+     * @param mixed[] $values
+     * @throws InvalidDataException
      */
     public function __construct(array $values)
     {
         $this->id = (string)$values['id'];
         $this->sessionId = (string)$values['sessionId'];
-        $this->createdAt = (new DateTime())->setTimestamp($values['createdAt']);
+        $this->createdAt = (new DateTime())->setTimestamp((int)$values['createdAt']);
         $this->size = (int)$values['size'];
         $this->duration = (float)$values['duration'];
         $this->url = (string)$values['url'];
-        $this->status = new RecordingStatusEnum($values['status']);
+        $this->status = new RecordingStatusEnum((string)$values['status']);
 
-        $outputMode = new RecordingOutputModeEnum($values['outputMode']);
+        $outputMode = new RecordingOutputModeEnum((string)$values['outputMode']);
         $builder = (new RecordingPropertiesBuilder())
-            ->setName($values['name'])
+            ->setName((string)$values['name'])
             ->setOutputMode($outputMode)
-            ->setHasAudio($values['hasAudio'])
-            ->setHasVideo($values['hasVideo']);
-        if ($outputMode->equalsString(RecordingOutputModeEnum::COMPOSED) && $values['hasVideo']) {
-            $builder->setResolution($values['resolution'])
-                ->setRecordingLayout($values['recordingLayout']);
+            ->setHasAudio((bool)$values['hasAudio'])
+            ->setHasVideo((bool)$values['hasVideo']);
+        if ((bool)$values['hasVideo'] && $outputMode->equalsString(RecordingOutputModeEnum::COMPOSED)) {
+            $builder->setResolution((string)$values['resolution'])
+                ->setRecordingLayout(new RecordingLayoutEnum($values['recordingLayout']));
             if (isset($values['customLayout'])) {
-                $builder->setCustomLayout($values['customLayout']);
+                $builder->setCustomLayout((string)$values['customLayout']);
             }
-
         }
         $this->recordingProperties = $builder->build();
     }
@@ -110,9 +105,9 @@ class Recording
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCustomLayout(): string
+    public function getCustomLayout(): ?string
     {
         return $this->recordingProperties->getCustomLayout();
     }
@@ -158,9 +153,9 @@ class Recording
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getResolution(): string
+    public function getResolution(): ?string
     {
         return $this->recordingProperties->getResolution();
     }
@@ -180,6 +175,4 @@ class Recording
     {
         return $this->recordingProperties->isHasVideo();
     }
-
-
 }

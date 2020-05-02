@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: stopka
- * Date: 13.10.17
- * Time: 12:36
- */
+
+declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Rest;
 
