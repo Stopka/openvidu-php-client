@@ -13,7 +13,7 @@ class RecordingStatusEnum
     const STARTING = "starting";
     const STARTED = "started";
     const STOPPED = "stopped";
-    const AVAILABLE = "available";
+    const READY = "ready";
     const FAILED = "failed";
 
     public function getValues(): array
@@ -22,7 +22,7 @@ class RecordingStatusEnum
             self::STARTING,
             self::STARTED,
             self::STOPPED,
-            self::AVAILABLE,
+            self::READY,
             self::FAILED
         ];
     }
