@@ -1,14 +1,14 @@
 SOURCES=./src ./tests
 
 fixPhpCs:
-	./vendor/bin/phpcbf $(SOURCES)
+	php ./vendor/bin/phpcbf $(SOURCES)
 
 fix: fixPhpCs
 
 testPhpCs:
-	./vendor/bin/phpcs $(SOURCES)
+	php ./vendor/bin/phpcs $(SOURCES)
 
 testPhpStan:
-	./vendor/bin/phpstan analyze $(SOURCES)
+	php ./vendor/bin/phpstan analyze $(SOURCES)
 
 test: testPhpCs testPhpStan

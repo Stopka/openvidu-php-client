@@ -1,0 +1,22 @@
+language: php
+php:
+    - 7.4
+
+install:
+    - travis_retry composer install --no-progress --prefer-dist
+
+script:
+    - make test
+  #after_failure:
+# Print *.actual content
+#    - for i in $(find tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done
+
+
+sudo: false
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+notifications:
+    email: false
