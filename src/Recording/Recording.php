@@ -55,11 +55,11 @@ class Recording
             ->setHasAudio((bool)$values['hasAudio'])
             ->setHasVideo((bool)$values['hasVideo']);
         if ((bool)$values['hasVideo'] && $outputMode->equalsString(RecordingOutputModeEnum::COMPOSED)) {
-            $builder->setResolution((string)$values['resolution'])
-                ->setRecordingLayout(new RecordingLayoutEnum($values['recordingLayout']));
             if (isset($values['customLayout'])) {
                 $builder->setCustomLayout((string)$values['customLayout']);
             }
+            $builder->setResolution(RecordingResolution::createFromString((string)$values['resolution']))
+                ->setRecordingLayout(new RecordingLayoutEnum($values['recordingLayout']));
         }
         $this->recordingProperties = $builder->build();
     }
@@ -81,9 +81,9 @@ class Recording
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->recordingProperties->getName();
     }
@@ -153,9 +153,9 @@ class Recording
     }
 
     /**
-     * @return string|null
+     * @return RecordingResolution|null
      */
-    public function getResolution(): ?string
+    public function getResolution(): ?RecordingResolution
     {
         return $this->recordingProperties->getResolution();
     }

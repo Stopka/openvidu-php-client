@@ -1,0 +1,16 @@
+{
+    "id": "someId",
+    "sessionId": "someSessionId",
+    "createdAt": 1589056810,
+    "size": 1024,
+    "duration": 120.2,
+    "url": "some/url",
+    "status": "started",
+    "outputMode": "COMPOSED",
+    "name": "someName",
+    "hasAudio": false,
+    "hasVideo": true,
+    "customLayout": "someLayout",
+    "resolution": "320x240",
+    "recordingLayout": "CUSTOM"
+}

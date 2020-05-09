@@ -7,8 +7,8 @@ namespace Stopka\OpenviduPhpClient\Recording;
 class RecordingPropertiesBuilder
 {
 
-    /** @var string */
-    private string $name;
+    /** @var string|null */
+    private ?string $name = null;
 
     /** @var RecordingOutputModeEnum */
     private RecordingOutputModeEnum $outputMode;
@@ -16,36 +16,42 @@ class RecordingPropertiesBuilder
     /** @var RecordingLayoutEnum */
     private RecordingLayoutEnum $recordingLayout;
 
-    /** @var string */
-    private string $customLayout;
+    /** @var string|null */
+    private ?string $customLayout = null;
 
-    /** @var string */
-    private string $resolution;
-
-    /** @var bool */
-    private bool $hasAudio;
+    /** @var RecordingResolution|null */
+    private ?RecordingResolution $resolution = null;
 
     /** @var bool */
-    private bool $hasVideo;
+    private bool $hasAudio = true;
+
+    /** @var bool */
+    private bool $hasVideo = true;
+
+    public function __construct()
+    {
+        $this->outputMode = new RecordingOutputModeEnum(RecordingOutputModeEnum::COMPOSED);
+        $this->recordingLayout = new RecordingLayoutEnum(RecordingLayoutEnum::BEST_FIT);
+    }
 
     public function build(): RecordingProperties
     {
         return new RecordingProperties(
             $this->name,
-            $this->outputMode ?? null,
-            $this->recordingLayout ?? null,
-            $this->customLayout ?? null,
-            $this->resolution ?? null,
-            $this->hasAudio ?? true,
-            $this->hasVideo ?? true
+            $this->outputMode,
+            $this->recordingLayout,
+            $this->customLayout,
+            $this->resolution,
+            $this->hasAudio,
+            $this->hasVideo
         );
     }
 
     /**
-     * @param string $name
+     * @param string|null $name
      * @return static
      */
-    public function setName(string $name): self
+    public function setName(?string $name): self
     {
         $this->name = $name;
 
@@ -75,21 +81,24 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param string $customLayout
+     * @param string|null $customLayout
      * @return static
      */
-    public function setCustomLayout(string $customLayout): self
+    public function setCustomLayout(?string $customLayout): self
     {
         $this->customLayout = $customLayout;
+        if (null !== $customLayout) {
+            $this->setRecordingLayout(new RecordingLayoutEnum(RecordingLayoutEnum::CUSTOM));
+        }
 
         return $this;
     }
 
     /**
-     * @param string $resolution
+     * @param RecordingResolution|null $resolution
      * @return static
      */
-    public function setResolution(string $resolution): self
+    public function setResolution(?RecordingResolution $resolution): self
     {
         $this->resolution = $resolution;
 

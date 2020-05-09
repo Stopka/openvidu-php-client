@@ -7,8 +7,8 @@ namespace Stopka\OpenviduPhpClient\Recording;
 class RecordingProperties
 {
 
-    /** @var string */
-    private string $name;
+    /** @var string|null */
+    private ?string $name;
 
     /** @var RecordingOutputModeEnum */
     private RecordingOutputModeEnum $outputMode;
@@ -16,11 +16,11 @@ class RecordingProperties
     /** @var RecordingLayoutEnum */
     private RecordingLayoutEnum $recordingLayout;
 
-    /** @var string */
+    /** @var string|null */
     private ?string $customLayout;
 
-    /** @var string */
-    private ?string $resolution;
+    /** @var RecordingResolution|null */
+    private ?RecordingResolution $resolution;
 
     /** @var bool */
     private bool $hasAudio;
@@ -29,11 +29,11 @@ class RecordingProperties
     private bool $hasVideo;
 
     public function __construct(
-        string $name,
-        RecordingOutputModeEnum $outputMode = null,
-        RecordingLayoutEnum $recordingLayout = null,
+        ?string $name,
+        RecordingOutputModeEnum $outputMode,
+        RecordingLayoutEnum $recordingLayout,
         ?string $customLayout = null,
-        ?string $resolution = null,
+        ?RecordingResolution $resolution = null,
         bool $hasAudio = true,
         bool $hasVideo = true
     ) {
@@ -47,9 +47,9 @@ class RecordingProperties
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -79,9 +79,9 @@ class RecordingProperties
     }
 
     /**
-     * @return string|null
+     * @return RecordingResolution|null
      */
-    public function getResolution(): ?string
+    public function getResolution(): ?RecordingResolution
     {
         return $this->resolution;
     }

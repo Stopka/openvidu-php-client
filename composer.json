@@ -38,7 +38,7 @@
         }
     },
     "scripts": {
-        "phpcbf": "phpcbf ./src ./tests",
+        "phpcbf": "phpcbf --standard=tests/phpcs.xml ./src ./tests",
         "phpcs": "phpcs --standard=tests/phpcs.xml src tests",
         "phpstan": "phpstan analyse --configuration tests/phpstan.neon src tests",
         "tester": "tester -p phpdbg tests -s --coverage ./tests/coverage.xml --coverage-src ./src",

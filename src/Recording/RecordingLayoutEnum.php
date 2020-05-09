@@ -38,7 +38,7 @@ class RecordingLayoutEnum
     /**
      * @return string[]
      */
-    public function getValues(): array
+    public static function getValues(): array
     {
         return [
             self::BEST_FIT,
