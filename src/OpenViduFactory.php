@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Stopka\OpenviduPhpClient;
 
 use GuzzleHttp\ClientInterface;
-use Stopka\OpenviduPhpClient\Rest\HttpClientFactory;
+use Stopka\OpenviduPhpClient\Rest\HttpClient\ClientConfig;
+use Stopka\OpenviduPhpClient\Rest\HttpClient\ClientFactory;
 use Stopka\OpenviduPhpClient\Rest\RestClient;
 
 class OpenViduFactory
@@ -21,9 +22,10 @@ class OpenViduFactory
 
     /**
      * OpenViduFactory constructor.
+     *
      * @param string $urlOpenViduServer
      * @param string $secret
-     * @param bool $sslCheck
+     * @param bool   $sslCheck
      */
     public function __construct(string $urlOpenViduServer, string $secret, bool $sslCheck = true)
     {
@@ -48,20 +50,31 @@ class OpenViduFactory
         return new RestClient($this->createHttpClient());
     }
 
+    private function createHttpClientConfig(): ClientConfig
+    {
+        return new ClientConfig(
+            $this->urlOpenViduServer,
+            $this->secret,
+            $this->sslCheck
+        );
+    }
+
     /**
      * @return ClientInterface
      */
     private function createHttpClient(): ClientInterface
     {
-        return $this->createHttpClientFactory()
-            ->create($this->urlOpenViduServer, $this->secret, $this->sslCheck);
+        $factory = $this->createHttpClientFactory();
+        $config = $this->createHttpClientConfig();
+
+        return $factory->createClient($config);
     }
 
     /**
-     * @return HttpClientFactory
+     * @return ClientFactory
      */
-    private function createHttpClientFactory(): HttpClientFactory
+    private function createHttpClientFactory(): ClientFactory
     {
-        return new HttpClientFactory();
+        return new ClientFactory();
     }
 }

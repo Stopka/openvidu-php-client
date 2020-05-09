@@ -25,6 +25,7 @@ class OpenVidu
 
     /**
      * OpenVidu constructor.
+     *
      * @param RestClient $restClient
      */
     public function __construct(RestClient $restClient)
@@ -33,7 +34,7 @@ class OpenVidu
     }
 
     /**
-     * @param SessionProperties|null $properties
+     * @param  SessionProperties|null $properties
      * @return Session
      * @throws OpenViduException
      */
@@ -46,7 +47,7 @@ class OpenVidu
     }
 
     /**
-     * @param mixed[] $data
+     * @param  mixed[] $data
      * @return Session|null
      */
     public function createSessionFromDataArray(array $data): ?Session
@@ -62,8 +63,8 @@ class OpenVidu
     }
 
     /**
-     * @param string $sessionId
-     * @param null|RecordingProperties $properties
+     * @param  string                   $sessionId
+     * @param  null|RecordingProperties $properties
      * @return Recording
      * @throws OpenViduException
      */
@@ -96,7 +97,7 @@ class OpenVidu
     }
 
     /**
-     * @param string $recordingId
+     * @param  string $recordingId
      * @return Recording
      * @throws OpenViduException
      */
@@ -113,7 +114,7 @@ class OpenVidu
     }
 
     /**
-     * @param string $recordingId
+     * @param  string $recordingId
      * @return Recording
      * @throws OpenViduException
      */
@@ -149,7 +150,7 @@ class OpenVidu
     }
 
     /**
-     * @param string $recordingId
+     * @param  string $recordingId
      * @throws OpenViduException
      */
     public function deleteRecording(string $recordingId): void

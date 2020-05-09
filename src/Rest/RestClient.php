@@ -17,6 +17,7 @@ class RestClient
 
     /**
      * RestClient constructor.
+     *
      * @param ClientInterface $httpClient
      */
     public function __construct(ClientInterface $httpClient)

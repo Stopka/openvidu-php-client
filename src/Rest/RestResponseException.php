@@ -16,9 +16,9 @@ class RestResponseException extends RestClientException
     public function __construct(RequestException $previous)
     {
         $httpResponse = $previous->getResponse();
+        $message = null;
         if (null !== $httpResponse) {
             $this->response = new RestResponse($httpResponse);
-            $message = null;
             try {
                 $message = $this->response->getStringInArrayKey(self::KEY_MESSAGE);
             } catch (RestResponseInvalidException $e) {
@@ -26,10 +26,5 @@ class RestResponseException extends RestClientException
         }
         $message = $message ?? $previous->getMessage();
         parent::__construct($message, $previous->getCode(), $previous);
-    }
-
-    public function getResponse(): ?RestResponse
-    {
-        return $this->response;
     }
 }

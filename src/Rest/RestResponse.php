@@ -13,11 +13,11 @@ class RestResponse
     protected const MIME_JSON = 'application/json';
 
     /** @var ResponseInterface */
-    private ResponseInterface $response;
+    private ResponseInterface $httpResponse;
 
     public function __construct(ResponseInterface $response)
     {
-        $this->response = $response;
+        $this->httpResponse = $response;
     }
 
     /**
@@ -35,7 +35,7 @@ class RestResponse
     }
 
     /**
-     * @param string $key
+     * @param  string $key
      * @return mixed
      * @throws RestResponseInvalidException
      */
@@ -50,7 +50,7 @@ class RestResponse
     }
 
     /**
-     * @param string $key
+     * @param  string $key
      * @return string
      * @throws RestResponseInvalidException
      */
@@ -65,7 +65,7 @@ class RestResponse
     }
 
     /**
-     * @param string $key
+     * @param  string $key
      * @return mixed[]
      * @throws RestResponseInvalidException
      */
@@ -86,9 +86,9 @@ class RestResponse
     {
         $this->checkContentType();
         try {
-            $this->response->getBody()->rewind();
+            $this->httpResponse->getBody()->rewind();
 
-            return json_decode($this->response->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
+            return json_decode($this->httpResponse->getBody()->getContents(), true, 512, JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             throw new RestResponseInvalidException('Could not parse json', 0, $e);
         }
@@ -99,7 +99,7 @@ class RestResponse
      */
     private function checkContentType(): void
     {
-        $contentType = $this->response->getHeader(self::HEADER_CONTENT_TYPE);
+        $contentType = $this->httpResponse->getHeader(self::HEADER_CONTENT_TYPE);
         if (!in_array(self::MIME_JSON, $contentType, true)) {
             throw new RestResponseInvalidException('Invalid content type ' . implode(',', $contentType));
         }

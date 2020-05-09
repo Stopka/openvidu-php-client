@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
-<ruleset name="Mediafactory coding standards">
-    <description>Mediafactory coding standards</description>
+<ruleset name="Stopka coding standards">
+    <description>Stopka coding standard</description>
+    <arg name="extensions" value="php,phpt" />
     <!-- PSR1 -->
     <rule ref="Generic.PHP.DisallowShortOpenTag.EchoFound">
         <severity>0</severity>
@@ -12,6 +13,9 @@
             <property name="lineLimit" value="120"/>
             <property name="absoluteLineLimit" value="0"/>
         </properties>
+    </rule>
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern>*/tests/*</exclude-pattern>
     </rule>
     <!-- PSR2 -->
     <rule ref="PSR2.Files.EndFileNewline"/>

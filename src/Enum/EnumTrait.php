@@ -11,13 +11,15 @@ trait EnumTrait
 
     /**
      * EnumTrait constructor.
-     * @param string $value
+     *
+     * @param  string $value
      * @throws EnumException
      */
     public function __construct(string $value)
     {
-        if (!in_array($value, $this->getValues(), true)) {
-            throw new EnumException('Invalid enum value');
+        if (!in_array($value, static::getValues(), true)) {
+            $class = self::class;
+            throw new EnumException("Invalid string value '${value}' for enum '${class}'");
         }
         $this->value = $value;
     }
@@ -31,7 +33,7 @@ trait EnumTrait
     }
 
     /**
-     * @param self $enum
+     * @param  self $enum
      * @return bool
      */
     public function equals(self $enum): bool
@@ -40,7 +42,7 @@ trait EnumTrait
     }
 
     /**
-     * @param string $enumString
+     * @param  string $enumString
      * @return bool
      */
     public function equalsString(string $enumString): bool
@@ -51,5 +53,5 @@ trait EnumTrait
     /**
      * @return string[]
      */
-    abstract public function getValues(): array;
+    abstract public static function getValues(): array;
 }
