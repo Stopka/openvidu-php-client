@@ -9,14 +9,14 @@ use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 class TokenOptionsBuilder
 {
 
-    /** @var  string */
-    private string $data = '';
+    /** @var  string|null */
+    private ?string $data = null;
 
     /** @var  OpenViduRoleEnum */
     private OpenViduRoleEnum $role;
 
-    /** @var KurentoOptions */
-    private KurentoOptions $kurentoOptions;
+    /** @var KurentoOptions|null */
+    private ?KurentoOptions $kurentoOptions = null;
 
 
     public function __construct()
@@ -25,10 +25,10 @@ class TokenOptionsBuilder
     }
 
     /**
-     * @param string $data
+     * @param string|null $data
      * @return self
      */
-    public function setData(string $data): self
+    public function setData(?string $data): self
     {
         $this->data = $data;
 
@@ -47,10 +47,10 @@ class TokenOptionsBuilder
     }
 
     /**
-     * @param KurentoOptions $kurentoOptions
+     * @param KurentoOptions|null $kurentoOptions
      * @return self
      */
-    public function setKurentoOptions(KurentoOptions $kurentoOptions): self
+    public function setKurentoOptions(?KurentoOptions $kurentoOptions): self
     {
         $this->kurentoOptions = $kurentoOptions;
 

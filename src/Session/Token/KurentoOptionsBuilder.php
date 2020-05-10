@@ -6,26 +6,28 @@ namespace Stopka\OpenviduPhpClient\Session\Token;
 
 class KurentoOptionsBuilder
 {
-    /** @var int|null */
-    private ?int $videoMaxRecvBandwidth;
+    public const BANDWIDTH_UNCONSTRAINED = 0;
 
-    /** @var int|null */
-    private ?int $videoMinRecvBandwidth;
+    /** @var int */
+    private int $videoMaxRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED;
 
-    /** @var int|null */
-    private ?int $videoMaxSendBandwidth;
+    /** @var int */
+    private int $videoMinRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED;
 
-    /** @var int|null */
-    private ?int $videoMinSendBandwidth;
+    /** @var int */
+    private int $videoMaxSendBandwidth = self::BANDWIDTH_UNCONSTRAINED;
+
+    /** @var int */
+    private int $videoMinSendBandwidth = self::BANDWIDTH_UNCONSTRAINED;
 
     /** @var string[] */
     private array $allowedFilters = [];
 
     /**
-     * @param int|null $videoMaxRecvBandwidth
+     * @param int $videoMaxRecvBandwidth
      * @return self
      */
-    public function setVideoMaxRecvBandwidth(?int $videoMaxRecvBandwidth): self
+    public function setVideoMaxRecvBandwidth(int $videoMaxRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
     {
         $this->videoMaxRecvBandwidth = $videoMaxRecvBandwidth;
 
@@ -33,10 +35,10 @@ class KurentoOptionsBuilder
     }
 
     /**
-     * @param int|null $videoMinRecvBandwidth
+     * @param int $videoMinRecvBandwidth
      * @return self
      */
-    public function setVideoMinRecvBandwidth(?int $videoMinRecvBandwidth): self
+    public function setVideoMinRecvBandwidth(int $videoMinRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
     {
         $this->videoMinRecvBandwidth = $videoMinRecvBandwidth;
 
@@ -44,10 +46,10 @@ class KurentoOptionsBuilder
     }
 
     /**
-     * @param int|null $videoMaxSendBandwidth
+     * @param int $videoMaxSendBandwidth
      * @return self
      */
-    public function setVideoMaxSendBandwidth(?int $videoMaxSendBandwidth): self
+    public function setVideoMaxSendBandwidth(int $videoMaxSendBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
     {
         $this->videoMaxSendBandwidth = $videoMaxSendBandwidth;
 
@@ -55,10 +57,10 @@ class KurentoOptionsBuilder
     }
 
     /**
-     * @param int|null $videoMinSendBandwidth
+     * @param int $videoMinSendBandwidth
      * @return self
      */
-    public function setVideoMinSendBandwidth(?int $videoMinSendBandwidth): self
+    public function setVideoMinSendBandwidth(int $videoMinSendBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
     {
         $this->videoMinSendBandwidth = $videoMinSendBandwidth;
 
@@ -69,7 +71,7 @@ class KurentoOptionsBuilder
      * @param string[] $allowedFilters
      * @return self
      */
-    public function setAllowedFilters(array $allowedFilters): self
+    public function setAllowedFilters(array $allowedFilters = []): self
     {
         $this->allowedFilters = $allowedFilters;
 
