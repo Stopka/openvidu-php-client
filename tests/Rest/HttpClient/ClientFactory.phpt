@@ -4,6 +4,8 @@
  * @dataProvider ClientFactory.argsProvider.ini
  */
 
+declare(strict_types=1);
+
 use Stopka\OpenviduPhpClient\Rest\HttpClient\ClientConfig;
 use Stopka\OpenviduPhpClient\Rest\HttpClient\ClientFactory;
 use Tester\Assert;

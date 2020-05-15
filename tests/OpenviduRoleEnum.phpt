@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 use Tester\Assert;
 

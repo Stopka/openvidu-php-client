@@ -23,25 +23,25 @@ class SessionProperties
     /** @var RecordingLayoutEnum */
     private RecordingLayoutEnum $defaultRecordingLayout;
 
-    /** @var string */
-    private string $defaultCustomLayout;
+    /** @var string|null */
+    private ?string $defaultCustomLayout;
 
     /** @var string */
-    private string $customSessionId;
+    private ?string $customSessionId;
 
 
     public function __construct(
-        ?MediaModeEnum $mediaMode = null,
-        ?RecordingModeEnum $recordingMode = null,
-        ?RecordingOutputModeEnum $defaultOutputMode = null,
-        ?RecordingLayoutEnum $layout = null,
-        string $defaultCustomLayout = '',
-        string $customSessionId = ''
+        MediaModeEnum $mediaMode,
+        RecordingModeEnum $recordingMode,
+        RecordingOutputModeEnum $defaultOutputMode,
+        RecordingLayoutEnum $layout,
+        ?string $defaultCustomLayout = null,
+        ?string $customSessionId = null
     ) {
-        $this->mediaMode = $mediaMode ?? new MediaModeEnum(MediaModeEnum::ROUTED);
-        $this->recordingMode = $recordingMode ?? new RecordingModeEnum(RecordingModeEnum::MANUAL);
-        $this->defaultOutputMode = $defaultOutputMode ?? new RecordingOutputModeEnum(RecordingOutputModeEnum::COMPOSED);
-        $this->defaultRecordingLayout = $layout ?? new RecordingLayoutEnum(RecordingLayoutEnum::BEST_FIT);
+        $this->mediaMode = $mediaMode;
+        $this->recordingMode = $recordingMode;
+        $this->defaultOutputMode = $defaultOutputMode;
+        $this->defaultRecordingLayout = $layout;
         $this->defaultCustomLayout = $defaultCustomLayout;
         $this->customSessionId = $customSessionId;
     }
@@ -79,17 +79,17 @@ class SessionProperties
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDefaultCustomLayout(): string
+    public function getDefaultCustomLayout(): ?string
     {
         return $this->defaultCustomLayout;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCustomSessionId(): string
+    public function getCustomSessionId(): ?string
     {
         return $this->customSessionId;
     }

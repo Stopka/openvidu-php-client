@@ -25,7 +25,7 @@ class OpenViduFactory
      *
      * @param string $urlOpenViduServer
      * @param string $secret
-     * @param bool   $sslCheck
+     * @param bool $sslCheck
      */
     public function __construct(string $urlOpenViduServer, string $secret, bool $sslCheck = true)
     {
@@ -45,12 +45,12 @@ class OpenViduFactory
     /**
      * @return RestClient
      */
-    private function createRestClient(): RestClient
+    public function createRestClient(): RestClient
     {
         return new RestClient($this->createHttpClient());
     }
 
-    private function createHttpClientConfig(): ClientConfig
+    public function createHttpClientConfig(): ClientConfig
     {
         return new ClientConfig(
             $this->urlOpenViduServer,
@@ -62,7 +62,7 @@ class OpenViduFactory
     /**
      * @return ClientInterface
      */
-    private function createHttpClient(): ClientInterface
+    public function createHttpClient(): ClientInterface
     {
         $factory = $this->createHttpClientFactory();
         $config = $this->createHttpClientConfig();
@@ -73,7 +73,7 @@ class OpenViduFactory
     /**
      * @return ClientFactory
      */
-    private function createHttpClientFactory(): ClientFactory
+    public function createHttpClientFactory(): ClientFactory
     {
         return new ClientFactory();
     }

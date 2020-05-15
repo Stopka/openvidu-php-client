@@ -10,28 +10,27 @@ require __DIR__ . '/../../bootstrap.php';
 $someBandwidth = 256;
 $someFilters = ['filterOne', 'filterTwo'];
 
-$bandwidth = $someBandwidth;
-$builder = new KurentoOptionsBuilder();
-$builder->setVideoMaxRecvBandwidth($bandwidth++);
-$builder->setVideoMinRecvBandwidth($bandwidth++);
-$builder->setVideoMinSendBandwidth($bandwidth++);
-$builder->setVideoMaxSendBandwidth($bandwidth++);
-$builder->setAllowedFilters($someFilters);
+$builder = (new KurentoOptionsBuilder())
+    ->setVideoMaxRecvBandwidth($someBandwidth + 0)
+    ->setVideoMinRecvBandwidth($someBandwidth + 1)
+    ->setVideoMinSendBandwidth($someBandwidth + 2)
+    ->setVideoMaxSendBandwidth($someBandwidth + 3)
+    ->setAllowedFilters($someFilters);
 $options = $builder->build();
 
 $bandwidth = $someBandwidth;
 Assert::same($someFilters, $options->getAllowedFilters());
-Assert::same($bandwidth++, $options->getVideoMaxRecvBandwidth());
-Assert::same($bandwidth++, $options->getVideoMinRecvBandwidth());
-Assert::same($bandwidth++, $options->getVideoMinSendBandwidth());
-Assert::same($bandwidth++, $options->getVideoMaxSendBandwidth());
+Assert::same($someBandwidth + 0, $options->getVideoMaxRecvBandwidth());
+Assert::same($someBandwidth + 1, $options->getVideoMinRecvBandwidth());
+Assert::same($someBandwidth + 2, $options->getVideoMinSendBandwidth());
+Assert::same($someBandwidth + 3, $options->getVideoMaxSendBandwidth());
 $bandwidth = $someBandwidth;
 Assert::same(
     [
-        'videoMaxRecvBandwidth' => $bandwidth++,
-        'videoMinRecvBandwidth' => $bandwidth++,
-        'videoMinSendBandwidth' => $bandwidth++,
-        'videoMaxSendBandwidth' => $bandwidth++,
+        'videoMaxRecvBandwidth' => $someBandwidth + 0,
+        'videoMinRecvBandwidth' => $someBandwidth + 1,
+        'videoMinSendBandwidth' => $someBandwidth + 2,
+        'videoMaxSendBandwidth' => $someBandwidth + 3,
         'allowedFilters' => $someFilters,
     ],
     $options->getDataArray()

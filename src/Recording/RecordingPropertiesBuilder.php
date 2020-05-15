@@ -87,9 +87,6 @@ class RecordingPropertiesBuilder
     public function setCustomLayout(?string $customLayout): self
     {
         $this->customLayout = $customLayout;
-        if (null !== $customLayout) {
-            $this->setRecordingLayout(new RecordingLayoutEnum(RecordingLayoutEnum::CUSTOM));
-        }
 
         return $this;
     }

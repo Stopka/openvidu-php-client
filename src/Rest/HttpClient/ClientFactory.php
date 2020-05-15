@@ -9,9 +9,9 @@ use GuzzleHttp\ClientInterface;
 
 class ClientFactory
 {
-    protected const AUTH_USER = 'OPENVIDUAPP';
-    protected const HEADER_ACCEPT = 'Accept';
-    protected const MIME_JSON = 'application/json';
+    public const AUTH_USER = 'OPENVIDUAPP';
+    public const HEADER_ACCEPT = 'Accept';
+    public const MIME_JSON = 'application/json';
 
     public function createClient(ClientConfig $config): ClientInterface
     {

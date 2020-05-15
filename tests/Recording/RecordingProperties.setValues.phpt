@@ -14,13 +14,14 @@ $customLayoutExample = 'someLayout';
 $nameExample = 'someName';
 $resolutionExample = '480x640';
 
-$builder = new RecordingPropertiesBuilder();
-$builder->setCustomLayout($customLayoutExample);
-$builder->setHasAudio(false);
-$builder->setHasVideo(false);
-$builder->setName($nameExample);
-$builder->setOutputMode(new RecordingOutputModeEnum(RecordingOutputModeEnum::INDIVIDUAL));
-$builder->setResolution(RecordingResolution::createFromString($resolutionExample));
+$builder = (new RecordingPropertiesBuilder())
+    ->setCustomLayout($customLayoutExample)
+    ->setRecordingLayout(new RecordingLayoutEnum(RecordingLayoutEnum::CUSTOM))
+    ->setHasAudio(false)
+    ->setHasVideo(false)
+    ->setName($nameExample)
+    ->setOutputMode(new RecordingOutputModeEnum(RecordingOutputModeEnum::INDIVIDUAL))
+    ->setResolution(RecordingResolution::createFromString($resolutionExample));
 $properties = $builder->build();
 
 Assert::same($nameExample, $properties->getName());

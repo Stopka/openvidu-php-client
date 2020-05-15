@@ -101,7 +101,7 @@ class Session
      */
     public function generateToken(?TokenOptions $tokenOptions = null): string
     {
-        $tokenOptions = $tokenOptions ?? $this->getDefaultTokenOptions();
+        $tokenOptions = $tokenOptions ?? (new TokenOptionsBuilder())->build();
         try {
             $data = [
                 'session' => $this->getSessionId(),
@@ -120,18 +120,6 @@ class Session
     }
 
     /**
-     * @return TokenOptions
-     * @throws EnumException
-     */
-    private function getDefaultTokenOptions(): TokenOptions
-    {
-        $builder = new TokenOptionsBuilder();
-        $builder->setRole(new OpenViduRoleEnum(OpenViduRoleEnum::PUBLISHER));
-
-        return $builder->build();
-    }
-
-    /**
      *
      */
     public function close(): void
@@ -144,6 +132,7 @@ class Session
     }
 
     /**
+     * @return bool hasChanged?
      * @throws InvalidDataException
      */
     public function fetch(): bool
@@ -153,9 +142,8 @@ class Session
             $data = $this->restClient->get(ApiPaths::SESSIONS . '/' . $this->sessionId)
                 ->getArray();
             $this->resetSessionWithDataArray($data);
-            $hasChanged = json_encode($this->toDataArray()) !== json_encode($beforeArray);
 
-            return $hasChanged;
+            return json_encode($this->toDataArray()) !== json_encode($beforeArray);
         } catch (RestClientException $e) {
             throw new OpenViduException('Unable to fetch session', 0, $e);
         }
@@ -226,14 +214,14 @@ class Session
     }
 
     /**
-     * @param string|null $sesstionId
+     * @param string|null $sessionId
      * @return string
      * @throws OpenViduException
      */
-    private function retrieveSessionId(?string $sesstionId = null): string
+    private function retrieveSessionId(?string $sessionId = null): string
     {
-        if (null !== $sesstionId && '' !== $sesstionId) {
-            return $sesstionId;
+        if (null !== $sessionId && '' !== $sessionId) {
+            return $sessionId;
         }
         try {
             return $this->restClient->post(
@@ -277,7 +265,8 @@ class Session
         if (isset($data['defaultCustomLayout'])) {
             $builder->setDefaultCustomLayout($data['defaultCustomLayout']);
         }
-        if ('' !== $this->properties->getCustomSessionId()) {
+        $customSessionId = $this->properties->getCustomSessionId();
+        if ('' !== $customSessionId && null !== $customSessionId) {
             $builder->setCustomSessionId($this->properties->getCustomSessionId());
         }
         $this->properties = $builder->build();

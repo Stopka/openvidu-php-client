@@ -23,11 +23,11 @@ class SessionPropertiesBuilder
     /** @var RecordingLayoutEnum */
     private RecordingLayoutEnum $defaultRecordingLayout;
 
-    /** @var string */
-    private string $defaultCustomLayout = '';
+    /** @var string|null */
+    private ?string $defaultCustomLayout = null;
 
-    /** @var string */
-    private string $customSessionId = '';
+    /** @var string|null */
+    private ?string $customSessionId = null;
 
     public function __construct()
     {
@@ -134,7 +134,7 @@ class SessionPropertiesBuilder
      * @param string $path
      * @return static
      */
-    public function setDefaultCustomLayout(string $path): self
+    public function setDefaultCustomLayout(?string $path): self
     {
         $this->defaultCustomLayout = $path;
 
@@ -150,7 +150,7 @@ class SessionPropertiesBuilder
      * @param string $customSessionId
      * @return static
      */
-    public function setCustomSessionId(string $customSessionId): self
+    public function setCustomSessionId(?string $customSessionId): self
     {
         $this->customSessionId = $customSessionId;
 

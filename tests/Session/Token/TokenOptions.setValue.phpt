@@ -12,10 +12,10 @@ require __DIR__ . '/../../bootstrap.php';
 $dataExample = 'someData';
 $kurentoOptions = (new KurentoOptionsBuilder())->build();
 
-$builder = new TokenOptionsBuilder();
-$builder->setRole(new OpenViduRoleEnum(OpenViduRoleEnum::SUBSCRIBER));
-$builder->setData($dataExample);
-$builder->setKurentoOptions($kurentoOptions);
+$builder = (new TokenOptionsBuilder())
+    ->setRole(new OpenViduRoleEnum(OpenViduRoleEnum::SUBSCRIBER))
+    ->setData($dataExample)
+    ->setKurentoOptions($kurentoOptions);
 $options = $builder->build();
 
 Assert::same(OpenViduRoleEnum::SUBSCRIBER, (string)$options->getRole());
