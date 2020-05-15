@@ -7,10 +7,9 @@ install:
 
 script:
     - composer test
-  #after_failure:
-# Print *.actual content
-#    - for i in $(find tests -name \*.actual); do echo "--- $i"; cat $i; echo; echo; done
-
+after_success:
+    - composer require --dev php-coveralls/php-coveralls
+    - travis_retry php vendor/bin/php-coveralls --config ./tests/.coveralls.yml
 
 sudo: false
 
@@ -20,12 +19,3 @@ cache:
 
 notifications:
     email: false
-
-jobs:
-    include:
-        -   stage: Code Coverage
-            php: 7.4
-            script:
-                - composer require --dev php-coveralls/php-coveralls
-            after_script:
-                - travis_retry php vendor/bin/php-coveralls --coverage_clover ./tests/coverage.xml
