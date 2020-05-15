@@ -9,7 +9,7 @@ use Stopka\OpenviduPhpClient\Recording\RecordingLayoutEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingModeEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingOutputModeEnum;
 
-class etropoSessionProperties
+class SessionProperties
 {
     /** @var MediaModeEnum */
     private MediaModeEnum $mediaMode;
