@@ -20,7 +20,7 @@ class OpenVidu
     /** @var RestClient */
     protected RestClient $restClient;
 
-    /** @var Session[] */
+    /** @var array<string,Session> */
     protected array $activeSessions = [];
 
     /**
@@ -34,7 +34,7 @@ class OpenVidu
     }
 
     /**
-     * @param  SessionProperties|null $properties
+     * @param SessionProperties|null $properties
      * @return Session
      * @throws OpenViduException
      */
@@ -47,24 +47,25 @@ class OpenVidu
     }
 
     /**
-     * @param  mixed[] $data
-     * @return Session|null
+     * @param mixed[] $data
+     * @return Session
+     * @throws OpenViduException
      */
-    public function createSessionFromDataArray(array $data): ?Session
+    public function createSessionFromDataArray(array $data): Session
     {
         try {
             $session = Session::createFromArray($this->restClient, $data);
             $this->activeSessions[$session->getSessionId()] = $session;
 
             return $session;
-        } catch (InvalidDataException $e) {
-            return null;
+        } catch (InvalidDataException $exception) {
+            throw new OpenViduException('Could not create session', 0, $exception);
         }
     }
 
     /**
-     * @param  string                   $sessionId
-     * @param  null|RecordingProperties $properties
+     * @param string $sessionId
+     * @param null|RecordingProperties $properties
      * @return Recording
      * @throws OpenViduException
      */
@@ -82,7 +83,7 @@ class OpenVidu
                 'hasVideo' => $properties->isHasVideo(),
             ];
             if ($properties->getOutputMode()->equalsString(RecordingOutputModeEnum::COMPOSED)) {
-                $data['resolution'] = $properties->getResolution();
+                $data['resolution'] = (string)$properties->getResolution();
                 $data['recordingLayout'] = (string)$properties->getRecordingLayout();
                 if ($properties->getRecordingLayout()->equalsString(RecordingLayoutEnum::CUSTOM)) {
                     $data['customLayout'] = $properties->getCustomLayout() ?? '';
@@ -97,7 +98,7 @@ class OpenVidu
     }
 
     /**
-     * @param  string $recordingId
+     * @param string $recordingId
      * @return Recording
      * @throws OpenViduException
      */
@@ -114,7 +115,7 @@ class OpenVidu
     }
 
     /**
-     * @param  string $recordingId
+     * @param string $recordingId
      * @return Recording
      * @throws OpenViduException
      */
@@ -150,7 +151,7 @@ class OpenVidu
     }
 
     /**
-     * @param  string $recordingId
+     * @param string $recordingId
      * @throws OpenViduException
      */
     public function deleteRecording(string $recordingId): void
@@ -164,31 +165,31 @@ class OpenVidu
 
 
     /**
-     * @return Session[]
+     * @return array<string,Session> sessionId => session
      */
     public function getActiveSessions(): array
     {
         return array_map(
-            fn(Session $session) => clone $session,
+            fn(Session $session): Session => clone $session,
             $this->activeSessions
         );
     }
 
     /**
-     * @return bool
+     * @return bool session data changed
      * @throws OpenViduException
      */
     public function fetch(): bool
     {
         try {
-            $jsonArraySessions = $this->restClient->get(ApiPaths::SESSIONS)->getArrayInArrayKey('content');
+            $arraySessions = $this->restClient->get(ApiPaths::SESSIONS)->getArrayInArrayKey('content');
 
             // Set to store fetched sessionIds and later remove closed sessions
             $fetchedSessionIds = [];
             // Boolean to store if any Session has changed
-            $hasChanged = false;
+            $sessionListChanged = false;
 
-            foreach ($jsonArraySessions as $arraySession) {
+            foreach ($arraySessions as $arraySession) {
                 $sessionId = $arraySession['sessionId'];
                 $fetchedSessionIds[] = $sessionId;
                 if (isset($this->activeSessions[$sessionId])) {
@@ -196,23 +197,23 @@ class OpenVidu
                     $beforeArray = $session->toDataArray();
                     $session->resetSessionWithDataArray($arraySession);
                     $afterArray = $session->toDataArray();
-                    $changed = json_encode($beforeArray) !== json_encode($afterArray);
-                    $hasChanged = $hasChanged || $changed;
+                    $sessionChanged = json_encode($beforeArray) !== json_encode($afterArray);
+                    $sessionListChanged = $sessionListChanged || $sessionChanged;
                 } else {
-                    $hasChanged = true;
+                    $sessionListChanged = true;
                     $this->activeSessions[$sessionId] = Session::createFromArray($this->restClient, $arraySession);
                 }
             }
             foreach ($this->activeSessions as $key => $session) {
                 if (!in_array($key, $fetchedSessionIds, true)) {
-                    $hasChanged = true;
+                    $sessionListChanged = true;
                     unset($this->activeSessions[$key]);
                 }
             }
 
-            return $hasChanged;
-        } catch (RestClientException | InvalidDataException $e) {
-            throw new OpenViduException('Sessions fetching failed', 0, $e);
+            return $sessionListChanged;
+        } catch (RestClientException | InvalidDataException $exception) {
+            throw new OpenViduException('Sessions fetching failed', 0, $exception);
         }
     }
 }

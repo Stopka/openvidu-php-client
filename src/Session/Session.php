@@ -40,6 +40,11 @@ class Session
     /** @var bool */
     private bool $recording = false;
 
+    /**
+     * @param RestClient $restClient
+     * @param SessionProperties|null $properties
+     * @return self
+     */
     public static function createFromProperties(RestClient $restClient, ?SessionProperties $properties = null): self
     {
         return new self($restClient, $properties);
@@ -48,7 +53,7 @@ class Session
     /**
      * @param RestClient $restClient
      * @param mixed[] $data
-     * @return Session
+     * @return self
      * @throws InvalidDataException
      */
     public static function createFromArray(RestClient $restClient, array $data): self

@@ -12,3 +12,4 @@ includes:
     - ../vendor/phpstan/phpstan-deprecation-rules/rules.neon
     - ../vendor/phpstan/phpstan-strict-rules/rules.neon
     - ../vendor/phpstan/phpstan-mockery/extension.neon
+    - ../vendor/nepada/phpstan-nette-tester/extension.neon
