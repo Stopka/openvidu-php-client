@@ -11,22 +11,34 @@ use Stopka\OpenviduPhpClient\Recording\RecordingOutputModeEnum;
 
 class SessionPropertiesBuilder
 {
-    /** @var MediaModeEnum */
+    /**
+     * @var MediaModeEnum
+     */
     private MediaModeEnum $mediaMode;
 
-    /** @var RecordingModeEnum */
+    /**
+     * @var RecordingModeEnum
+     */
     private RecordingModeEnum $recordingMode;
 
-    /** @var RecordingOutputModeEnum */
+    /**
+     * @var RecordingOutputModeEnum
+     */
     private RecordingOutputModeEnum $defaultOutputMode;
 
-    /** @var RecordingLayoutEnum */
+    /**
+     * @var RecordingLayoutEnum
+     */
     private RecordingLayoutEnum $defaultRecordingLayout;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private ?string $defaultCustomLayout = null;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private ?string $customSessionId = null;
 
     public function __construct()
@@ -62,7 +74,8 @@ class SessionPropertiesBuilder
      * (<code>MediaModeEnum.RELAYED</code>, <i>not available yet</i>)
      *
      * Default value is <code>MediaModeEnum.ROUTED</code>
-     * @param MediaModeEnum $mediaMode
+     *
+     * @param  MediaModeEnum $mediaMode
      * @return static
      */
     public function setMediaMode(MediaModeEnum $mediaMode): self
@@ -78,7 +91,8 @@ class SessionPropertiesBuilder
      * (<code>RecordingModeEnum.MANUAL</code>)
      *
      * Default value is <code>RecordingModeEnum.MANUAL</code>
-     * @param RecordingModeEnum $recordingMode
+     *
+     * @param  RecordingModeEnum $recordingMode
      * @return static
      */
     public function setRecordingMode(RecordingModeEnum $recordingMode): self
@@ -95,7 +109,8 @@ class SessionPropertiesBuilder
      * starting a {@link io.openvidu.java.client.Recording} by calling
      * {@link io.openvidu.java.client.RecordingProperties.Builder#outputMode(Recording.OutputMode)}
      * with any other value.<br>
-     * @param RecordingOutputModeEnum $defaultOutputMode
+     *
+     * @param  RecordingOutputModeEnum $defaultOutputMode
      * @return static
      */
     public function setDefaultOutputMode(RecordingOutputModeEnum $defaultOutputMode): self
@@ -114,7 +129,8 @@ class SessionPropertiesBuilder
      * with any other value
      *
      * Default value is <code>RecordingLayoutEnum.BEST_FIT</code>
-     * @param RecordingLayoutEnum $layout
+     *
+     * @param  RecordingLayoutEnum $layout
      * @return static
      */
     public function setDefaultRecordingLayout(RecordingLayoutEnum $layout): self
@@ -131,7 +147,8 @@ class SessionPropertiesBuilder
      * initializing a {@link io.openvidu.java.client.Recording} by calling
      * {@link io.openvidu.java.client.RecordingProperties.Builder#customLayout(String)}
      * with any other value
-     * @param string $path
+     *
+     * @param  string $path
      * @return static
      */
     public function setDefaultCustomLayout(?string $path): self
@@ -147,7 +164,8 @@ class SessionPropertiesBuilder
      * OpenVidu Server 'session' entities and your own 'session' entities. If this
      * parameter is undefined or an empty string, OpenVidu Server will generate a
      * random sessionId for you.
-     * @param string $customSessionId
+     *
+     * @param  string $customSessionId
      * @return static
      */
     public function setCustomSessionId(?string $customSessionId): self

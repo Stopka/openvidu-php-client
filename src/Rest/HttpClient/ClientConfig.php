@@ -6,13 +6,19 @@ namespace Stopka\OpenviduPhpClient\Rest\HttpClient;
 
 class ClientConfig
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $baseUri;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $password;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $verify;
 
     /**

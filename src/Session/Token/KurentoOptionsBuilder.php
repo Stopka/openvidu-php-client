@@ -8,23 +8,33 @@ class KurentoOptionsBuilder
 {
     public const BANDWIDTH_UNCONSTRAINED = 0;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMaxRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMinRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMaxSendBandwidth = self::BANDWIDTH_UNCONSTRAINED;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMinSendBandwidth = self::BANDWIDTH_UNCONSTRAINED;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private array $allowedFilters = [];
 
     /**
-     * @param int $videoMaxRecvBandwidth
+     * @param  int $videoMaxRecvBandwidth
      * @return self
      */
     public function setVideoMaxRecvBandwidth(int $videoMaxRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
@@ -35,7 +45,7 @@ class KurentoOptionsBuilder
     }
 
     /**
-     * @param int $videoMinRecvBandwidth
+     * @param  int $videoMinRecvBandwidth
      * @return self
      */
     public function setVideoMinRecvBandwidth(int $videoMinRecvBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
@@ -46,7 +56,7 @@ class KurentoOptionsBuilder
     }
 
     /**
-     * @param int $videoMaxSendBandwidth
+     * @param  int $videoMaxSendBandwidth
      * @return self
      */
     public function setVideoMaxSendBandwidth(int $videoMaxSendBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
@@ -57,7 +67,7 @@ class KurentoOptionsBuilder
     }
 
     /**
-     * @param int $videoMinSendBandwidth
+     * @param  int $videoMinSendBandwidth
      * @return self
      */
     public function setVideoMinSendBandwidth(int $videoMinSendBandwidth = self::BANDWIDTH_UNCONSTRAINED): self
@@ -68,7 +78,7 @@ class KurentoOptionsBuilder
     }
 
     /**
-     * @param string[] $allowedFilters
+     * @param  string[] $allowedFilters
      * @return self
      */
     public function setAllowedFilters(array $allowedFilters = []): self

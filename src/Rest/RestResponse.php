@@ -12,7 +12,9 @@ class RestResponse
     protected const HEADER_CONTENT_TYPE = 'Content-Type';
     protected const MIME_JSON = 'application/json';
 
-    /** @var ResponseInterface */
+    /**
+     * @var ResponseInterface
+     */
     private ResponseInterface $httpResponse;
 
     public function __construct(ResponseInterface $response)

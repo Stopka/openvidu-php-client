@@ -9,19 +9,26 @@ use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 class TokenOptions
 {
 
-    /** @var  string|null */
+    /**
+     * @var string|null
+     */
     private ?string $data = null;
 
-    /** @var  OpenViduRoleEnum */
+    /**
+     * @var OpenViduRoleEnum
+     */
     private OpenViduRoleEnum $role;
 
-    /** @var KurentoOptions */
+    /**
+     * @var KurentoOptions
+     */
     private ?KurentoOptions $kurentoOptions = null;
 
     /**
      * TokenOptions constructor.
-     * @param string $data
-     * @param OpenViduRoleEnum $role
+     *
+     * @param string              $data
+     * @param OpenViduRoleEnum    $role
      * @param KurentoOptions|null $kurentoOptions
      */
     public function __construct(?string $data, OpenViduRoleEnum $role, ?KurentoOptions $kurentoOptions = null)

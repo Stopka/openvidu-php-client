@@ -8,6 +8,9 @@ use Tester\Assert;
 require __DIR__ . '/bootstrap.php';
 
 Assert::same(
-    ['RELAYED', 'ROUTED'],
-    MediaModeEnum::getValues()
+    [
+        'RELAYED' => 'RELAYED',
+        'ROUTED' => 'ROUTED',
+    ],
+    MediaModeEnum::toArray()
 );

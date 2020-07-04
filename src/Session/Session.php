@@ -22,27 +22,39 @@ use Stopka\OpenviduPhpClient\Session\Token\TokenOptionsBuilder;
 class Session
 {
 
-    /** @var  RestClient */
+    /**
+     * @var RestClient
+     */
     private RestClient $restClient;
 
-    /** @var  string */
+    /**
+     * @var string
+     */
     private string $sessionId;
 
-    /** @var DateTime */
+    /**
+     * @var DateTime
+     */
     private DateTime $createdAt;
 
-    /** @var SessionProperties */
+    /**
+     * @var SessionProperties
+     */
     private SessionProperties $properties;
 
-    /** @var Connection[] */
+    /**
+     * @var Connection[]
+     */
     private array $activeConnections = [];
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $recording = false;
 
     /**
-     * @param RestClient $restClient
-     * @param SessionProperties|null $properties
+     * @param  RestClient             $restClient
+     * @param  SessionProperties|null $properties
      * @return self
      */
     public static function createFromProperties(RestClient $restClient, ?SessionProperties $properties = null): self
@@ -51,8 +63,8 @@ class Session
     }
 
     /**
-     * @param RestClient $restClient
-     * @param mixed[] $data
+     * @param  RestClient $restClient
+     * @param  mixed[]    $data
      * @return self
      * @throws InvalidDataException
      */
@@ -66,9 +78,10 @@ class Session
 
     /**
      * Session constructor.
-     * @param RestClient $restClient
-     * @param null|SessionProperties $properties
-     * @param null|string $sessionId
+     *
+     * @param  RestClient             $restClient
+     * @param  null|SessionProperties $properties
+     * @param  null|string            $sessionId
      * @throws OpenViduException
      */
     protected function __construct(
@@ -99,7 +112,7 @@ class Session
     }
 
     /**
-     * @param null|TokenOptions $tokenOptions
+     * @param  null|TokenOptions $tokenOptions
      * @return string
      * @throws OpenViduException
      * @throws InvalidDataException
@@ -219,7 +232,7 @@ class Session
     }
 
     /**
-     * @param string|null $sessionId
+     * @param  string|null $sessionId
      * @return string
      * @throws OpenViduException
      */
@@ -250,7 +263,7 @@ class Session
     }
 
     /**
-     * @param mixed[] $data
+     * @param  mixed[] $data
      * @throws InvalidDataException
      */
     public function resetSessionWithDataArray(array $data): void

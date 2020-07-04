@@ -4,25 +4,16 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient;
 
-use Stopka\OpenviduPhpClient\Enum\EnumTrait;
+use MyCLabs\Enum\Enum;
 
-final class OpenViduRoleEnum
+/**
+ * Class OpenViduRoleEnum
+ * @package Stopka\OpenviduPhpClient
+ * @extends Enum<string>
+ */
+final class OpenViduRoleEnum extends Enum
 {
-    use EnumTrait;
-
     public const SUBSCRIBER = 'SUBSCRIBER';
     public const PUBLISHER = 'PUBLISHER';
     public const MODERATOR = 'MODERATOR';
-
-    /**
-     * @return string[]
-     */
-    public static function getValues(): array
-    {
-        return [
-            self::SUBSCRIBER,
-            self::PUBLISHER,
-            self::MODERATOR,
-        ];
-    }
 }

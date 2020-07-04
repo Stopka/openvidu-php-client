@@ -17,10 +17,14 @@ use Stopka\OpenviduPhpClient\Session\SessionProperties;
 class OpenVidu
 {
 
-    /** @var RestClient */
+    /**
+     * @var RestClient
+     */
     protected RestClient $restClient;
 
-    /** @var array<string,Session> */
+    /**
+     * @var array<string,Session>
+     */
     protected array $activeSessions = [];
 
     /**
@@ -82,10 +86,10 @@ class OpenVidu
                 'hasAudio' => $properties->isHasAudio(),
                 'hasVideo' => $properties->isHasVideo(),
             ];
-            if ($properties->getOutputMode()->equalsString(RecordingOutputModeEnum::COMPOSED)) {
+            if (RecordingOutputModeEnum::COMPOSED === $properties->getOutputMode()->getValue()) {
                 $data['resolution'] = (string)$properties->getResolution();
                 $data['recordingLayout'] = (string)$properties->getRecordingLayout();
-                if ($properties->getRecordingLayout()->equalsString(RecordingLayoutEnum::CUSTOM)) {
+                if (RecordingLayoutEnum::CUSTOM === $properties->getRecordingLayout()->getValue()) {
                     $data['customLayout'] = $properties->getCustomLayout() ?? '';
                 }
             }

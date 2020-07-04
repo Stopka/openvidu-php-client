@@ -10,10 +10,14 @@ class RecordingResolution
     public const MIN = 100;
     public const MAX = 1999;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $width;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $height;
 
     public function __construct(int $width, int $height)
@@ -52,7 +56,7 @@ class RecordingResolution
     }
 
     /**
-     * @param string $resolution <width>x<height>
+     * @param  string $resolution <width>x<height>
      * @return RecordingResolution
      */
     public static function createFromString(string $resolution): self

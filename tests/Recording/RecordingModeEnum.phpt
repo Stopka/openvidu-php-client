@@ -8,6 +8,9 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 Assert::same(
-    ['ALWAYS', 'MANUAL'],
-    RecordingModeEnum::getValues()
+    [
+        'ALWAYS' => 'ALWAYS',
+        'MANUAL' => 'MANUAL',
+    ],
+    RecordingModeEnum::toArray()
 );

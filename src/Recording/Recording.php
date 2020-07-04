@@ -9,33 +9,50 @@ use Stopka\OpenviduPhpClient\InvalidDataException;
 
 class Recording
 {
-    /** @var RecordingStatusEnum */
+    /**
+     * @var RecordingStatusEnum
+     */
     private RecordingStatusEnum $status;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $id;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $sessionId;
 
-    /** @var DateTime */
+    /**
+     * @var DateTime
+     */
     private DateTime $createdAt;
 
-    /** @var int bytes */
+    /**
+     * @var int bytes
+     */
     private int $size;
 
-    /** @var float seconds */
+    /**
+     * @var float seconds
+     */
     private float $duration;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $url;
 
-    /** @var RecordingProperties */
+    /**
+     * @var RecordingProperties
+     */
     private RecordingProperties $recordingProperties;
 
     /**
      * Recording constructor.
-     * @param mixed[] $values
+     *
+     * @param  mixed[] $values
      * @throws InvalidDataException
      */
     public function __construct(array $values)
@@ -54,7 +71,7 @@ class Recording
             ->setOutputMode($outputMode)
             ->setHasAudio((bool)$values['hasAudio'])
             ->setHasVideo((bool)$values['hasVideo']);
-        if ((bool)$values['hasVideo'] && $outputMode->equalsString(RecordingOutputModeEnum::COMPOSED)) {
+        if ((bool)$values['hasVideo'] && RecordingOutputModeEnum::COMPOSED === $outputMode->getValue()) {
             if (isset($values['customLayout'])) {
                 $builder->setCustomLayout((string)$values['customLayout']);
             }

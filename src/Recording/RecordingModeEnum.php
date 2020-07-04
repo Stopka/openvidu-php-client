@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
 
-use Stopka\OpenviduPhpClient\Enum\EnumTrait;
+use MyCLabs\Enum\Enum;
 
-class RecordingModeEnum
+/**
+ * Class RecordingModeEnum
+ * @package Stopka\OpenviduPhpClient\Recording
+ * @extends Enum<string>
+ */
+class RecordingModeEnum extends Enum
 {
-    use EnumTrait;
 
     /**
      * The session is recorded automatically as soon as the first client publishes a
@@ -25,15 +29,4 @@ class RecordingModeEnum
      * {@link io.openvidu.java.client.OpenVidu#stopRecording(String)}.
      */
     public const MANUAL = 'MANUAL';
-
-    /**
-     * @return string[]
-     */
-    public static function getValues(): array
-    {
-        return [
-            self::ALWAYS,
-            self::MANUAL,
-        ];
-    }
 }

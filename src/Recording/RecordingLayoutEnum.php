@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
 
-use Stopka\OpenviduPhpClient\Enum\EnumTrait;
+use MyCLabs\Enum\Enum;
 
-class RecordingLayoutEnum
+/**
+ * Class RecordingLayoutEnum
+ * @package Stopka\OpenviduPhpClient\Recording
+ * @extends Enum<string>
+ */
+class RecordingLayoutEnum extends Enum
 {
-    use EnumTrait;
 
     /**
      * All the videos are evenly distributed, taking up as much space as possible
@@ -34,18 +38,4 @@ class RecordingLayoutEnum
      * <i>(not available yet)</i>
      */
     public const CUSTOM = 'CUSTOM';
-
-    /**
-     * @return string[]
-     */
-    public static function getValues(): array
-    {
-        return [
-            self::BEST_FIT,
-            self::PICTURE_IN_PICTURE,
-            self::VERTICAL_PRESENTATION,
-            self::HORIZONTAL_PRESENTATION,
-            self::CUSTOM,
-        ];
-    }
 }

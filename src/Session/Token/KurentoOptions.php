@@ -8,27 +8,38 @@ class KurentoOptions
 {
     public const BANDWIDTH_UNCONSTRAINED = 0;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMaxRecvBandwidth;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMinRecvBandwidth;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMaxSendBandwidth;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $videoMinSendBandwidth;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private array $allowedFilters;
 
     /**
      * KurentoOptions constructor.
-     * @param int $videoMaxRecvBandwidth
-     * @param int $videoMinRecvBandwidth
-     * @param int $videoMaxSendBandwidth
-     * @param int $videoMinSendBandwidth
+     *
+     * @param int      $videoMaxRecvBandwidth
+     * @param int      $videoMinRecvBandwidth
+     * @param int      $videoMaxSendBandwidth
+     * @param int      $videoMinSendBandwidth
      * @param string[] $allowedFilters
      */
     public function __construct(

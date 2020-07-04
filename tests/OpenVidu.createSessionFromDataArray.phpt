@@ -57,8 +57,8 @@ Assert::exception(
             ],
         ]
     ),
-    OpenViduException::class,
-    'Could not create session'
+    UnexpectedValueException::class,
+    "Value 'invalidMedia' is not part of the enum Stopka\OpenviduPhpClient\MediaModeEnum"
 );
 
 Mockery::close();

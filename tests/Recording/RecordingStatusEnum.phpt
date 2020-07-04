@@ -8,6 +8,12 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 Assert::same(
-    ['starting', 'started', 'stopped', 'ready', 'failed'],
-    RecordingStatusEnum::getValues()
+    [
+        'STARTING' => 'starting',
+        'STARTED' => 'started',
+        'STOPPED' => 'stopped',
+        'READY' => 'ready',
+        'FAILED' => 'failed',
+    ],
+    RecordingStatusEnum::toArray()
 );

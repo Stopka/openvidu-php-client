@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient;
 
-use Stopka\OpenviduPhpClient\Enum\EnumTrait;
+use MyCLabs\Enum\Enum;
 
-final class MediaModeEnum
+/**
+ * Class MediaModeEnum
+ * @package    Stopka\OpenviduPhpClient
+ * @extends Enum<string>
+ */
+final class MediaModeEnum extends Enum
 {
-    use EnumTrait;
-
     /**
      * <i>(not available yet)</i> The session will attempt to transmit streams
      * directly between clients
@@ -20,15 +23,4 @@ final class MediaModeEnum
      * The session will transmit streams using OpenVidu Media Server
      */
     public const ROUTED = 'ROUTED';
-
-    /**
-     * @return string[]
-     */
-    public static function getValues(): array
-    {
-        return [
-            self::RELAYED,
-            self::ROUTED,
-        ];
-    }
 }

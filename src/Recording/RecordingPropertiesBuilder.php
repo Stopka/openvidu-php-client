@@ -7,25 +7,39 @@ namespace Stopka\OpenviduPhpClient\Recording;
 class RecordingPropertiesBuilder
 {
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private ?string $name = null;
 
-    /** @var RecordingOutputModeEnum */
+    /**
+     * @var RecordingOutputModeEnum
+     */
     private RecordingOutputModeEnum $outputMode;
 
-    /** @var RecordingLayoutEnum */
+    /**
+     * @var RecordingLayoutEnum
+     */
     private RecordingLayoutEnum $recordingLayout;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private ?string $customLayout = null;
 
-    /** @var RecordingResolution|null */
+    /**
+     * @var RecordingResolution|null
+     */
     private ?RecordingResolution $resolution = null;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $hasAudio = true;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $hasVideo = true;
 
     public function __construct()
@@ -48,7 +62,7 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param string|null $name
+     * @param  string|null $name
      * @return static
      */
     public function setName(?string $name): self
@@ -59,7 +73,7 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param RecordingOutputModeEnum $outputMode
+     * @param  RecordingOutputModeEnum $outputMode
      * @return static
      */
     public function setOutputMode(RecordingOutputModeEnum $outputMode): self
@@ -70,7 +84,7 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param RecordingLayoutEnum $recordingLayout
+     * @param  RecordingLayoutEnum $recordingLayout
      * @return static
      */
     public function setRecordingLayout(RecordingLayoutEnum $recordingLayout): self
@@ -81,7 +95,7 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param string|null $customLayout
+     * @param  string|null $customLayout
      * @return static
      */
     public function setCustomLayout(?string $customLayout): self
@@ -92,7 +106,7 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param RecordingResolution|null $resolution
+     * @param  RecordingResolution|null $resolution
      * @return static
      */
     public function setResolution(?RecordingResolution $resolution): self
@@ -103,7 +117,7 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param bool $hasAudio
+     * @param  bool $hasAudio
      * @return static
      */
     public function setHasAudio(bool $hasAudio): self
@@ -114,7 +128,7 @@ class RecordingPropertiesBuilder
     }
 
     /**
-     * @param bool $hasVideo
+     * @param  bool $hasVideo
      * @return static
      */
     public function setHasVideo(bool $hasVideo): self

@@ -8,6 +8,9 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 Assert::same(
-    ['COMPOSED', 'INDIVIDUAL'],
-    RecordingOutputModeEnum::getValues()
+    [
+        'COMPOSED' => 'COMPOSED',
+        'INDIVIDUAL' => 'INDIVIDUAL',
+    ],
+    RecordingOutputModeEnum::toArray()
 );

@@ -10,7 +10,9 @@ class RestResponseException extends RestClientException
 {
     protected const KEY_MESSAGE = 'message';
 
-    /** @var RestResponse|null */
+    /**
+     * @var RestResponse|null
+     */
     private ?RestResponse $response;
 
     public function __construct(RequestException $previous)

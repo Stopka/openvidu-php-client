@@ -11,22 +11,34 @@ use Stopka\OpenviduPhpClient\Recording\RecordingOutputModeEnum;
 
 class SessionProperties
 {
-    /** @var MediaModeEnum */
+    /**
+     * @var MediaModeEnum
+     */
     private MediaModeEnum $mediaMode;
 
-    /** @var RecordingModeEnum */
+    /**
+     * @var RecordingModeEnum
+     */
     private RecordingModeEnum $recordingMode;
 
-    /** @var RecordingOutputModeEnum */
+    /**
+     * @var RecordingOutputModeEnum
+     */
     private RecordingOutputModeEnum $defaultOutputMode;
 
-    /** @var RecordingLayoutEnum */
+    /**
+     * @var RecordingLayoutEnum
+     */
     private RecordingLayoutEnum $defaultRecordingLayout;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private ?string $defaultCustomLayout;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private ?string $customSessionId;
 
 

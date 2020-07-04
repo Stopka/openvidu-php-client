@@ -11,7 +11,9 @@ use Psr\Http\Message\ResponseInterface;
 class RestClient
 {
 
-    /** @var ClientInterface */
+    /**
+     * @var ClientInterface
+     */
     private ClientInterface $httpClient;
 
 
@@ -26,8 +28,8 @@ class RestClient
     }
 
     /**
-     * @param string $url
-     * @param mixed[] $data
+     * @param  string  $url
+     * @param  mixed[] $data
      * @return RestResponse
      * @throws RestResponseException
      */
@@ -41,8 +43,8 @@ class RestClient
     }
 
     /**
-     * @param string $url
-     * @param mixed[] $data
+     * @param  string  $url
+     * @param  mixed[] $data
      * @return RestResponse
      */
     public function put(string $url, array $data = []): RestResponse
@@ -55,7 +57,7 @@ class RestClient
     }
 
     /**
-     * @param string $url
+     * @param  string $url
      * @return RestResponse
      * @throws RestResponseException
      */
@@ -67,7 +69,7 @@ class RestClient
     }
 
     /**
-     * @param string $url
+     * @param  string $url
      * @return RestResponse
      * @throws RestResponseException
      */
@@ -79,7 +81,7 @@ class RestClient
     }
 
     /**
-     * @param mixed[] $data
+     * @param  mixed[] $data
      * @return mixed[]
      */
     private function prepareOptions(array $data = []): array
@@ -90,7 +92,7 @@ class RestClient
     }
 
     /**
-     * @param callable $callback
+     * @param  callable $callback
      * @return RestResponse
      * @throws RestResponseException
      */

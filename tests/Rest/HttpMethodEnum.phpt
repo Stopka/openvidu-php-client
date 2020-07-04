@@ -8,6 +8,11 @@ use Tester\Assert;
 require __DIR__ . '/../bootstrap.php';
 
 Assert::same(
-    ['post', 'put', 'get', 'delete'],
-    HttpMethodEnum::getValues()
+    [
+        'POST' => 'post',
+        'PUT' => 'put',
+        'GET' => 'get',
+        'DELETE' => 'delete',
+    ],
+    HttpMethodEnum::toArray()
 );

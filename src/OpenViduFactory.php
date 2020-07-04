@@ -11,13 +11,19 @@ use Stopka\OpenviduPhpClient\Rest\RestClient;
 
 class OpenViduFactory
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $urlOpenViduServer;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $secret;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $sslCheck;
 
     /**
@@ -25,7 +31,7 @@ class OpenViduFactory
      *
      * @param string $urlOpenViduServer
      * @param string $secret
-     * @param bool $sslCheck
+     * @param bool   $sslCheck
      */
     public function __construct(string $urlOpenViduServer, string $secret, bool $sslCheck = true)
     {

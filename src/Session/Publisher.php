@@ -8,31 +8,49 @@ use DateTime;
 
 class Publisher
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $streamId;
 
-    /** @var DateTime */
+    /**
+     * @var DateTime
+     */
     private DateTime $createdAt;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $hasVideo;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $hasAudio;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $audioActive;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private bool $videoActive;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private int $frameRate;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $typeOfVideo;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $videoDimensions;
 
     public function __construct(
@@ -150,7 +168,7 @@ class Publisher
     }
 
     /**
-     * @param mixed[] $data
+     * @param  mixed[] $data
      * @return Publisher
      */
     public static function createFromDataArray(array $data): Publisher

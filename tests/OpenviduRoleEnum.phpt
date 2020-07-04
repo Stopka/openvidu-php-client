@@ -8,6 +8,10 @@ use Tester\Assert;
 require __DIR__ . '/bootstrap.php';
 
 Assert::same(
-    ['SUBSCRIBER', 'PUBLISHER', 'MODERATOR'],
-    OpenViduRoleEnum::getValues()
+    [
+        'SUBSCRIBER' => 'SUBSCRIBER',
+        'PUBLISHER' => 'PUBLISHER',
+        'MODERATOR' => 'MODERATOR',
+    ],
+    OpenViduRoleEnum::toArray()
 );

@@ -23,7 +23,7 @@ $session = $openVidu->createSession($sessionProperties->build());
 
 ```php
 $tokenOptions = new TokenOptions\TokenOptionsBuilder();
-$tokenOptions->setRole(OpenViduRoleEnum::PUBLISHER)
+$tokenOptions->setRole(OpenViduRoleEnum::PUBLISHER())
             ->setData(json_encode($tokenData));
 $token = $session->generateToken($tokenOptions->build());
 ```

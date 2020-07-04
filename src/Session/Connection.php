@@ -11,48 +11,69 @@ use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 class Connection
 {
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $connectionId;
 
-    /** @var DateTime */
+    /**
+     * @var DateTime
+     */
     private DateTime $createdAt;
 
-    /** @var OpenViduRoleEnum */
+    /**
+     * @var OpenViduRoleEnum
+     */
     private OpenViduRoleEnum $role;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $token;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $location;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $platform;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $serverData;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private string $clientData;
 
-    /** @var Publisher[] */
+    /**
+     * @var Publisher[]
+     */
     protected array $publishers = [];
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     protected array $subscribers = [];
 
     /**
      * Connection constructor.
-     * @param string $connectionId
-     * @param DateTime $createdAt
+     *
+     * @param string           $connectionId
+     * @param DateTime         $createdAt
      * @param OpenViduRoleEnum $role
-     * @param string $token
-     * @param string $location
-     * @param string $platform
-     * @param string $serverData
-     * @param string $clientData
-     * @param Publisher[] $publishers
-     * @param string[] $subscribers
+     * @param string           $token
+     * @param string           $location
+     * @param string           $platform
+     * @param string           $serverData
+     * @param string           $clientData
+     * @param Publisher[]      $publishers
+     * @param string[]         $subscribers
      */
     public function __construct(
         string $connectionId,
@@ -167,7 +188,7 @@ class Connection
     }
 
     /**
-     * @param mixed[] $data
+     * @param  mixed[] $data
      * @return Connection
      * @throws InvalidDataException
      */
