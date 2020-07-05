@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Recording;
 
-use DateTime;
+use DateTimeImmutable;
 use Stopka\OpenviduPhpClient\InvalidDataException;
 
 class Recording
@@ -25,9 +25,9 @@ class Recording
     private string $sessionId;
 
     /**
-     * @var DateTime
+     * @var DateTimeImmutable
      */
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     /**
      * @var int bytes
@@ -59,7 +59,7 @@ class Recording
     {
         $this->id = (string)$values['id'];
         $this->sessionId = (string)$values['sessionId'];
-        $this->createdAt = (new DateTime())->setTimestamp((int)$values['createdAt']);
+        $this->createdAt = (new DateTimeImmutable())->setTimestamp((int)$values['createdAt']);
         $this->size = (int)$values['size'];
         $this->duration = (float)$values['duration'];
         $this->url = (string)$values['url'];
@@ -138,9 +138,9 @@ class Recording
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }

@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
 
-use DateTime;
+use DateTimeImmutable;
 use Stopka\OpenviduPhpClient\ApiPaths;
-use Stopka\OpenviduPhpClient\Enum\EnumException;
 use Stopka\OpenviduPhpClient\InvalidDataException;
 use Stopka\OpenviduPhpClient\MediaModeEnum;
 use Stopka\OpenviduPhpClient\OpenViduException;
-use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingLayoutEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingModeEnum;
 use Stopka\OpenviduPhpClient\Recording\RecordingOutputModeEnum;
@@ -33,9 +31,9 @@ class Session
     private string $sessionId;
 
     /**
-     * @var DateTime
+     * @var DateTimeImmutable
      */
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     /**
      * @var SessionProperties
@@ -90,7 +88,7 @@ class Session
         ?string $sessionId = null
     ) {
         $this->restClient = $restClient;
-        $this->createdAt = new DateTime();
+        $this->createdAt = new DateTimeImmutable();
         $this->properties = $properties ?? (new SessionPropertiesBuilder())->build();
         $this->sessionId = $this->retrieveSessionId($sessionId);
     }
@@ -104,9 +102,9 @@ class Session
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -247,6 +245,7 @@ class Session
                 [
                     'mediaMode' => (string)$this->properties->getMediaMode(),
                     'recordingMode' => (string)$this->properties->getRecordingMode(),
+                    'defaultOutputMode' => (string)$this->properties->getDefaultOutputMode(),
                     'defaultRecordingLayout' => (string)$this->properties->getDefaultRecordingLayout(),
                     'defaultCustomLayout' => $this->properties->getDefaultCustomLayout(),
                     'customSessionId' => $this->properties->getCustomSessionId(),

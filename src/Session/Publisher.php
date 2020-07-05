@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
 
-use DateTime;
+use DateTimeImmutable;
 
 class Publisher
 {
@@ -14,9 +14,9 @@ class Publisher
     private string $streamId;
 
     /**
-     * @var DateTime
+     * @var DateTimeImmutable
      */
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     /**
      * @var bool
@@ -55,7 +55,7 @@ class Publisher
 
     public function __construct(
         string $streamId,
-        DateTime $createdAt,
+        DateTimeImmutable $createdAt,
         bool $hasAudio,
         bool $hasVideo,
         bool $audioActive,
@@ -84,9 +84,9 @@ class Publisher
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -176,15 +176,15 @@ class Publisher
         $mediaOptions = $data['mediaOptions'];
 
         return new self(
-            $data['streamId'],
-            (new DateTime())->setTimestamp($data['createdAt']),
-            $mediaOptions['hasAudio'],
-            $mediaOptions['hasVideo'],
-            $mediaOptions['audioActive'],
-            $mediaOptions['videoActive'],
-            $mediaOptions['frameRate'],
-            $mediaOptions['typeOfVideo'],
-            $mediaOptions['videoDimensions']
+            (string)$data['streamId'],
+            (new DateTimeImmutable())->setTimestamp((int)$data['createdAt']),
+            (bool)$mediaOptions['hasAudio'],
+            (bool)$mediaOptions['hasVideo'],
+            (bool)$mediaOptions['audioActive'],
+            (bool)$mediaOptions['videoActive'],
+            (int)$mediaOptions['frameRate'],
+            (string)$mediaOptions['typeOfVideo'],
+            (string)$mediaOptions['videoDimensions']
         );
     }
 }

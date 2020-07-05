@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Stopka\OpenviduPhpClient\Session;
 
-use DateTime;
+use DateTimeImmutable;
 use Stopka\OpenviduPhpClient\InvalidDataException;
 use Stopka\OpenviduPhpClient\OpenViduRoleEnum;
 
@@ -17,9 +17,9 @@ class Connection
     private string $connectionId;
 
     /**
-     * @var DateTime
+     * @var DateTimeImmutable
      */
-    private DateTime $createdAt;
+    private DateTimeImmutable $createdAt;
 
     /**
      * @var OpenViduRoleEnum
@@ -65,7 +65,7 @@ class Connection
      * Connection constructor.
      *
      * @param string           $connectionId
-     * @param DateTime         $createdAt
+     * @param DateTimeImmutable         $createdAt
      * @param OpenViduRoleEnum $role
      * @param string           $token
      * @param string           $location
@@ -77,7 +77,7 @@ class Connection
      */
     public function __construct(
         string $connectionId,
-        DateTime $createdAt,
+        DateTimeImmutable $createdAt,
         OpenViduRoleEnum $role,
         string $token,
         string $location,
@@ -108,9 +108,9 @@ class Connection
     }
 
     /**
-     * @return DateTime
+     * @return DateTimeImmutable
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -206,7 +206,7 @@ class Connection
 
         return new Connection(
             $data['connectionId'],
-            (new DateTime())->setTimestamp($data['createdAt']),
+            (new DateTimeImmutable())->setTimestamp($data['createdAt']),
             new OpenViduRoleEnum($data['role']),
             $data['token'],
             $data['location'],
