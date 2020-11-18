@@ -205,7 +205,7 @@ class OpenVidu
      */
     public function getActiveSessions(): array
     {
-        return clone $this->activeSessions;
+        return $this->activeSessions;
     }
 
     /**
