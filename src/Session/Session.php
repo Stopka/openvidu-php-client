@@ -25,7 +25,7 @@ use Stopka\OpenviduPhpClient\Session\Token\TokenOptionsBuilder;
 class Session
 {
     private const TOKEN_URL = "api/tokens";
-    private const SESSION_URL = "api/sessions";
+    private const SESSION_URL = "openvidu/api/sessions";
 
     /** @var  RestClient */
     private $restClient;
