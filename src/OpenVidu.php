@@ -23,11 +23,11 @@ class OpenVidu
 {
     protected const HTTP_USERNAME = "OPENVIDUAPP";
 
-    const SESSIONS_URL = "api/sessions";
+    const SESSIONS_URL = "openvidu/api/sessions";
     const TOKENS_URL = "api/tokens";
-    const RECORDINGS_URL = "api/recordings";
-    const RECORDINGS_START_URL = "api/recordings/start";
-    const RECORDINGS_STOP_URL = "api/recordings/stop";
+    const RECORDINGS_URL = "openvidu/api/recordings";
+    const RECORDINGS_START_URL = "openvidu/api/recordings/start";
+    const RECORDINGS_STOP_URL = "openvidu/api/recordings/stop";
 
     /** @var  string */
     protected $urlOpenViduServer;
