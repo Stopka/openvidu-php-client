@@ -24,7 +24,6 @@ use Stopka\OpenviduPhpClient\Session\Token\TokenOptionsBuilder;
 
 class Session
 {
-    private const TOKEN_URL = "api/tokens";
     private const SESSION_URL = "api/sessions";
 
     /** @var  RestClient */
@@ -114,14 +113,13 @@ class Session
         }
         try {
             $data = [
-                "session" => $this->getSessionId(),
                 "role" => (string)$tokenOptions->getRole(),
                 "data" => $tokenOptions->getData()
             ];
             if ($kurentoOptions = $tokenOptions->getKurentoOptions()) {
                 $data["kurentoOptions"] = $kurentoOptions->getDataArray();
             }
-            return $this->restClient->post(self::TOKEN_URL, $data)->getStringInArrayKey('id');
+            return $this->restClient->post(self::SESSION_URL . '/' . $this->getSessionId() . '/connection', $data)->getStringInArrayKey('token');
         } catch (RestClientException $e) {
             throw new OpenViduException("Could not retrieve token", 0, $e);
         }
