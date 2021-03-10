@@ -60,7 +60,7 @@ class Recording
             ->setHasVideo($values['hasVideo']);
         if ($outputMode->equalsString(RecordingOutputModeEnum::COMPOSED) && $values['hasVideo']) {
             $builder->setResolution($values['resolution'])
-                ->setRecordingLayout($values['recordingLayout']);
+                ->setRecordingLayout(new RecordingLayoutEnum($values['recordingLayout']));
             if (isset($values['customLayout'])) {
                 $builder->setCustomLayout($values['customLayout']);
             }
